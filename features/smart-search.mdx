@@ -1,0 +1,78 @@
+---
+title: "Smart Search, Smart 404, and Smart Related Posts"
+sidebarTitle: "Smart Search"
+description: "Three intelligent discovery features — Smart Search, Smart 404, and Smart Related Posts — powered by a single shared cached index for instant, zero-latency results."
+---
+
+TanaFlows ships three interconnected discovery features — **Smart Search**, **Smart 404**, and **Smart Related Posts** — built on a single shared architecture. All three features draw from one search index that is loaded once and cached in the browser, delivering 100% network efficiency and instant results across every interaction.
+
+---
+
+## Smart Search
+
+Smart Search lets readers find articles the moment they start typing, with no page reloads and no network round-trips after the initial load.
+
+- **Fuzzy Matching:** Automatically handles typos, accented versus non-accented characters, and related phrases, so readers find what they need even when their query isn't exact.
+- **Language-Aware Filtering:** Only articles matching the site's active language are shown in results. When browsing the Vietnamese version of a multilingual site, English-language posts are automatically excluded.
+- **Instant Performance:** Because the index is pre-loaded and cached in the browser, results appear as the user types with zero network latency.
+
+<Info>
+  Smart Search, Smart 404, and Smart Related Posts all share the same in-memory index. The Ghost Content API is queried **exactly once**, and the result is reused across all three features for the lifetime of the page session.
+</Info>
+
+---
+
+## Smart 404 — Intelligent Error Handling
+
+When a reader lands on a non-existent URL — whether from a broken backlink, a changed slug, or a typo — TanaFlows replaces the generic error screen with relevant article suggestions, automatically attempting to retain the visitor.
+
+<Steps>
+  <Step title="Capture the broken slug">
+    The system reads the broken URL slug directly from the browser's address bar.
+  </Step>
+  <Step title="Parse into key terms">
+    The slug is split into individual keywords. For example, `domain.com/tana-guide/` becomes the terms `tana` and `guide`.
+  </Step>
+  <Step title="Run fuzzy search">
+    Those terms are passed through the same fuzzy algorithm used by Smart Search, scanning all published articles in the cached index.
+  </Step>
+  <Step title="Display top suggestions">
+    The 3 most relevant articles are surfaced beneath the message *"Did you mean to visit one of these pages?"*, giving readers a clear path forward instead of a dead end.
+  </Step>
+</Steps>
+
+<Info>
+  Smart 404 relies on the same search index as Smart Search. No additional API call is made — the cached data from the page session is reused directly.
+</Info>
+
+---
+
+## Smart Related Posts
+
+The related posts section at the bottom of each article uses a five-tier matching algorithm to surface the most relevant content and keep readers engaged longer.
+
+- **Tier 0 — Manual Keywords (highest priority):** You can optionally pin specific articles by entering a manual keyword list on the post. The system prioritizes matches containing those keywords first.
+- **Tier 1 — Slug-based Matching:** The current article's slug is parsed into keywords, and the index is scanned for articles with similar keywords in their own slugs. For example, a post with the slug `tana-basic-guide` will prioritize results whose slugs contain `tana` or `basic`.
+- **Tier 2 — Title-based Matching:** If Tier 1 doesn't return enough results, the fuzzy algorithm compares the current article's title (or SEO title) against other articles to find semantic matches.
+- **Tier 3 — Tag-based Matching (fallback):** The system fills remaining slots (up to 6 articles total) with posts that share the same public tags as the current article, ordered by tag priority.
+- **De-duplication Filter:** The currently open article is automatically excluded from all recommendation results, ensuring every suggestion is a distinct, relevant post.
+
+---
+
+## Shared Index Architecture
+
+<Info>
+  The single-index architecture is the core design principle behind all three features. All three read from one unified, lightweight data structure loaded once and stored in the browser — no separate scripts, no redundant API calls.
+</Info>
+
+<Steps>
+  <Step title="Lightning-fast loading">
+    No separate scripts or plugins are needed for each feature. All three share a single unified core processor, keeping bundle size minimal.
+  </Step>
+  <Step title="Bandwidth efficient">
+    The Ghost Content API is queried exactly once for the entire system, minimizing server load regardless of how many of the three features are active on a given page.
+  </Step>
+  <Step title="Seamless user experience">
+    Searching, browsing recommendations, and recovering from broken links all happen instantly, with no visible loading states or layout shifts.
+  </Step>
+</Steps>

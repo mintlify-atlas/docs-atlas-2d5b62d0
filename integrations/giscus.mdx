@@ -1,0 +1,79 @@
+---
+title: "Setting Up Giscus Comments in TanaFlows Ghost Theme"
+sidebarTitle: "Giscus"
+description: "Integrate GitHub Discussions-powered comments into TanaFlows using Giscus — ideal for developer audiences who already have a GitHub account."
+---
+
+Giscus embeds [GitHub Discussions](https://giscus.app/) directly into your blog posts, turning every article into a discussion thread tied to a public GitHub repository. Because it is backed by GitHub, readers authenticate with their existing GitHub account, keeping spam low while fostering genuine technical conversations. It is a great fit for developer-focused Ghost publications that want a comment layer without ads or third-party tracking.
+
+## Prerequisites
+
+- A [GitHub account](https://github.com/)
+- A **public** GitHub repository with the **Discussions** feature enabled
+- The [Giscus app](https://github.com/apps/giscus) installed and granted access to that repository
+
+<Steps>
+  <Step title="Generate your Giscus configuration">
+    Visit [giscus.app](https://giscus.app/) and fill in your repository details. The configurator will generate a `<script>` tag that looks like this:
+
+    ```html
+    <script
+      src="https://giscus.app/client.js"
+      data-repo="[ENTER REPO HERE]"
+      data-repo-id="[ENTER REPO ID HERE]"
+      data-category="[ENTER CATEGORY NAME HERE]"
+      data-category-id="[ENTER CATEGORY ID HERE]"
+      data-mapping="pathname"
+      data-strict="0"
+      data-reactions-enabled="1"
+      data-emit-metadata="0"
+      data-input-position="bottom"
+      data-theme="preferred_color_scheme"
+      data-lang="en"
+      crossorigin="anonymous"
+      async
+    ></script>
+    ```
+
+    Note down these four attributes — you will need them in the next step:
+
+    - `data-repo`
+    - `data-repo-id`
+    - `data-category`
+    - `data-category-id`
+
+    <Note>
+      The values shown above are placeholders. Your generated config will contain real strings such as `"yourname/yourrepo"` and a Base64-encoded repository ID.
+    </Note>
+  </Step>
+
+  <Step title="Select Giscus as the comment provider in Ghost">
+    In your Ghost Admin dashboard, go to **Settings** → **Design & branding** → **Customizer** → **Post** → **Comment provider** and choose **Giscus**.
+  </Step>
+
+  <Step title="Paste the four data attributes into the Comment ID field">
+    In the **3rd comment id** field, paste all four attributes on a **single line**, separated by spaces:
+
+    ```html
+    data-repo="[ENTER REPO HERE]" data-repo-id="[ENTER REPO ID HERE]" data-category="[ENTER CATEGORY NAME HERE]" data-category-id="[ENTER CATEGORY ID HERE]"
+    ```
+
+    A real example looks like this:
+
+    ```html
+    data-repo="CuongGhost/giscus" data-repo-id="MDExxxx2MDc1MDA=" data-category="Announcements" data-category-id="DIC_kwDxxx"
+    ```
+
+    <Warning>
+      All four attributes must be on a single line with no line breaks. Line breaks will cause the integration to fail silently.
+    </Warning>
+  </Step>
+
+  <Step title="Save and verify">
+    Click **Save** in the Customizer, then open any post on your site. The Giscus comment widget should appear at the bottom of the post. Readers will be prompted to sign in with GitHub to leave a comment.
+  </Step>
+</Steps>
+
+<Tip>
+  Giscus inherits your site's color scheme automatically when you set `data-theme="preferred_color_scheme"` in the generated script. You do not need to configure dark/light mode separately.
+</Tip>

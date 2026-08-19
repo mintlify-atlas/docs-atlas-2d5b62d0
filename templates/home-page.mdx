@@ -1,0 +1,267 @@
+---
+title: "Home Page Template — Configure Your TanaFlows Landing Page"
+sidebarTitle: "Home Page"
+description: "Configure the TanaFlows home page using routes.yaml, a Ghost static page, and Code Injection widgets for hero, products, testimonials, and more."
+---
+
+The TanaFlows homepage uses the **`home-1.hbs`** layout — a modern, SEO-optimised design built for fast page loads. Rather than editing theme source files, all homepage sections (hero, products shelf, testimonials, gift callout, and featured posts) are driven by lightweight JavaScript configuration blocks injected through Ghost's built-in Code Injection panel. The four-step process below takes you from a fresh Ghost installation to a fully populated landing page.
+
+---
+
+## Step 1: Configure `routes.yaml`
+
+The homepage requires a custom route entry that maps the root path (`/`) to a static Ghost page named `home` and renders it with the `home-1` template.
+
+<Steps>
+  <Step title="Download your current routes file">
+    Go to **Ghost Admin → Settings → Labs**, find the **Routes** section, and click **Download current routes.yaml**.
+  </Step>
+  <Step title="Edit the routes block">
+    Open the file in any text editor and add or replace the `routes:` block with:
+
+    ```yaml
+    routes:
+      /:
+        data: page.home
+        template: home-1
+    ```
+  </Step>
+  <Step title="Upload the updated file">
+    Save the file and upload it back in Ghost Admin under **Settings → Labs → Routes**.
+  </Step>
+</Steps>
+
+---
+
+## Step 2: Create the Homepage Static Page
+
+This Ghost Page provides the hero title, hero subtitle, feature image background, and body copy displayed in the middle of the landing page.
+
+<Steps>
+  <Step title="Create a new Page">
+    Go to **Ghost Admin → Pages → New Page**.
+  </Step>
+  <Step title="Fill in the page content">
+    - **Title** — Your main headline or slogan (displayed prominently in the hero).
+    - **Body** — Any introductory text you want shown in the centre of the page.
+  </Step>
+  <Step title="Configure page settings">
+    Open the gear icon (⚙️) in the top-right corner and set:
+    - **Page URL (Slug):** `home` — this must match `page.home` in `routes.yaml`.
+    - **Feature Image:** Upload a large image; it becomes the hero section background.
+    - **Excerpt:** A short line displayed as a subheading beneath the main title.
+  </Step>
+  <Step title="Publish the page">
+    Click **Publish**.
+  </Step>
+</Steps>
+
+---
+
+## Step 3: Configure Widgets via Code Injection
+
+Open the **`home`** page settings (gear icon) → **Code Injection** → paste the relevant `<script>` blocks into the **Page header** field. You can include all six widgets or only the sections you need.
+
+<Note>
+  After pasting any script, customise the texts, image URLs, and links to match your brand before clicking **Save**.
+</Note>
+
+### Widget 1 — Highlight Logic
+
+Automatically highlights specified keywords in homepage headings using the theme's brand colour.
+
+```html
+<script>
+window.homeData = () => ({
+  init() {
+    if (!Alpine.store('home')) {
+      Alpine.store('home', {
+        core: Tana.persist({
+          // Words or phrases to highlight in orange
+          highlights: ['Stop hoarding', 'do not know where to start?'],
+          cache: {}
+        }).as('home_core').using(sessionStorage)
+      });
+    }
+  },
+  highlight(text) {
+    if (!text) return text;
+    const store = Alpine.store('home');
+    if (!store || !store.core) return text;
+    if (store.core.cache[text]) return store.core.cache[text];
+    const highlights = store.core.highlights;
+    if (!highlights || !Array.isArray(highlights)) return text;
+    const escaped = highlights.map(w => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+    const regex = new RegExp(`(${escaped.join('|')})`, 'gi');
+    const result = text.replace(regex, '<span class="text-ghost">$1</span>');
+    store.core.cache[text] = result;
+    return result;
+  }
+});
+</script>
+```
+
+### Widget 2 — Welcome Section
+
+Renders a two-column introduction block with a mockup image and a prominent call-to-action button.
+
+```html
+<script>
+window.welcomeData = () => ({
+  welcome: Tana.persist({
+    heading:    'Welcome to TanaFlows',
+    subheading: 'Discover how to build intellectual assets and automate your digital career.',
+    image:      'https://images.unsplash.com/photo-1516321318423-f06f85e504b3',
+    cta:        'Join the Community Now',
+    url:        'https://tanaflows.com/community',
+    note:       'Joining is completely free',
+  }).as('home_welcome').using(sessionStorage)
+});
+</script>
+```
+
+### Widget 3 — Products Shelf
+
+Displays a card grid of your products or services, plus an optional pull-quote block beneath it.
+
+```html
+<script>
+window.productsData = () => ({
+  store: Tana.persist({
+    heading:    'Ultimate Weapons for Creators',
+    subheading: 'Tools and services designed to help you monetize your knowledge automatically.',
+    products: [
+      {
+        category:    'COURSE',
+        title:       '30-Day Writing Challenge',
+        description: 'A step-by-step roadmap to help you build a habit of publishing high-quality content daily.',
+        icon:        'https://img.icons8.com/isometric/512/opened-folder.png',
+        cta:         'Learn More',
+        url:         'https://tanaflows.com/challenge',
+        badge:       'Most Popular',
+      },
+      {
+        category:    'TEMPLATE',
+        title:       'Tana Builder Second Brain',
+        description: 'An advanced knowledge, project, and notes management system tailored for Tana app.',
+        icon:        'https://img.icons8.com/isometric/512/brain.png',
+        cta:         'Get Template',
+        url:         'https://tanaflows.com/tana-builder',
+        badge:       'Course Included',
+      }
+    ],
+    quote: {
+      avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e',
+      text:   'Knowledge is only potential power. It becomes actual power only when and if it is organized into definite plans of action.',
+      author: 'Napoleon Hill',
+    },
+  }).as('home_products').using(sessionStorage),
+
+  get heading()    { return this.store.heading },
+  get subheading() { return this.store.subheading },
+  get products()   { return this.store.products },
+  get quote()      { return this.store.quote },
+});
+</script>
+```
+
+### Widget 4 — Gift / Benefits Section
+
+A two-column section: a large image on the left, and a free gift callout with a bullet-point benefits list on the right.
+
+```html
+<script>
+window.giftData = () => ({
+  store: Tana.persist({
+    image:       'https://images.unsplash.com/photo-1522202176988-66273c2fd55f',
+    heading:     'Still overwhelmed and not sure where to start?',
+    description: 'Do not rush into collecting more tools. Before building your digital career map, you must deconstruct common mindset traps to avoid burnout.',
+    bullets: [
+      { icon: '❌', text: 'Remove the burden of daily scattered note-taking.' },
+      { icon: '✅', text: 'Unlock the mindset to set up self-operating systems.' },
+    ],
+    cta: {
+      label: 'Get the Free Roadmap',
+      url:   'https://tanaflows.com/free-roadmap',
+    },
+  }).as('home_gift').using(sessionStorage),
+
+  get image()       { return this.store.image },
+  get heading()     { return this.store.heading },
+  get description() { return this.store.description },
+  get bullets()     { return this.store.bullets },
+  get cta()         { return this.store.cta },
+});
+</script>
+```
+
+### Widget 5 — Testimonials
+
+Displays community reviews and quotes from students or readers in a card layout.
+
+```html
+<script>
+window.testimonialsData = () => ({
+  store: Tana.persist({
+    heading:    'What the Community Says About TanaFlows',
+    subheading: 'Real transformation stories from creators.',
+    testimonials: [
+      {
+        name:   'John Doe',
+        role:   'Content Creator',
+        avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde',
+        quote:  'The Tana templates saved me 2 hours every day organizing my writing ideas.',
+        badge:  'Diamond Member',
+      },
+      {
+        name:   'Jane Smith',
+        role:   'Writer & Blogger',
+        avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330',
+        quote:  'This theme loads incredibly fast. My readers absolutely love the clean experience!',
+        badge:  'Alumni K1',
+      }
+    ],
+  }).as('home_testimonials').using(sessionStorage),
+
+  get heading()      { return this.store.heading },
+  get subheading()   { return this.store.subheading },
+  get testimonials() { return this.store.testimonials },
+});
+</script>
+```
+
+### Widget 6 — Featured Blogs Header
+
+Customises the section heading and description for the handpicked articles area at the bottom of the homepage.
+
+```html
+<script>
+window.featuredPostsData = () => ({
+  store: Tana.persist({
+    heading:    'Featured Articles',
+    subheading: 'Foundational insights to help you grow faster and more sustainably in your digital journey.',
+  }).as('home_featured').using(sessionStorage),
+
+  get heading()    { return this.store.heading },
+  get subheading() { return this.store.subheading },
+});
+</script>
+```
+
+---
+
+## Step 4: Add Featured Posts
+
+The **Featured Articles** section at the bottom of the homepage automatically pulls posts you have marked as featured in Ghost Admin.
+
+<Steps>
+  <Step title="Open a post">
+    Go to **Ghost Admin → Posts** and select the post you want to feature.
+  </Step>
+  <Step title="Mark it as featured">
+    Open post settings (gear icon) and enable **Feature this post** (star icon).
+  </Step>
+  <Step title="Save">
+    Click **Save**. The post will appear automatically in the homepage featured section.
+  </Step>
+</Steps>

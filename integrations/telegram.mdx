@@ -1,0 +1,42 @@
+---
+title: "Setting Up Telegram Comments in TanaFlows Ghost Theme"
+sidebarTitle: "Telegram"
+description: "Connect Telegram's comment widget to TanaFlows using comments.app — great for communities already active on Telegram, using your Site ID."
+---
+
+The [Telegram Comments widget](https://comments.app/) brings Telegram-powered discussions directly to your Ghost blog posts. Because readers comment using their Telegram accounts, there is no separate registration step for your audience. The interface is clean and familiar to any Telegram user. While it lacks some advanced moderation features found in dedicated comment platforms, it is a natural fit for publishers whose readership is already active on Telegram.
+
+## Prerequisites
+
+- An active [Telegram](https://telegram.org/) account
+- Access to [comments.app](https://comments.app/) to register your site
+
+<Steps>
+  <Step title="Register your site on comments.app">
+    Go to [comments.app](https://comments.app/) and sign in with your Telegram account.
+
+    Click **Connect Website** and fill in your site's name and domain URL when prompted.
+  </Step>
+
+  <Step title="Copy your Site ID">
+    After registering your site, comments.app will display a **Site ID** for your domain.
+
+    Copy this Site ID — you will paste it into Ghost in the next step.
+  </Step>
+
+  <Step title="Select Telegram as the comment provider in Ghost">
+    In your Ghost Admin dashboard, go to **Settings** → **Design** → **Customizer** → **Post** → **Comment provider** and choose **Telegram**.
+  </Step>
+
+  <Step title="Paste your Site ID into the Comment ID field">
+    In the **3rd comment id** field, paste the **Site ID** you copied from comments.app.
+  </Step>
+
+  <Step title="Save and verify">
+    Click **Save** in the Customizer, then open any post on your site. The Telegram comment widget will appear at the bottom of each post. Readers who click to comment will be directed to authenticate via Telegram.
+  </Step>
+</Steps>
+
+<Info>
+  The Telegram comment widget is lightweight and loads quickly, but comment notifications and moderation are handled through the Telegram app itself rather than a dedicated web dashboard. Keep this in mind if comment moderation is a priority for your publication.
+</Info>

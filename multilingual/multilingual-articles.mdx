@@ -1,0 +1,90 @@
+---
+title: "Write and Link Multilingual Articles in Ghost"
+sidebarTitle: "Multilingual Articles"
+description: "Use the #multilingual internal tag and matching slugs to link translated posts in TanaFlows. Includes localization of static UI labels."
+---
+
+TanaFlows links translated articles automatically — no shortcodes, no plugin settings, no manual URL mapping. The system relies on two simple rules: every translated post must carry the `#multilingual` internal tag, and all language versions of the same article must share an **identical slug**. When both conditions are met, TanaFlows generates the correct language-switcher links and `hreflang` SEO tags for you.
+
+## Key Principles
+
+- You write and publish **two separate posts** — one per language — each in its own Ghost instance.
+- Posts in your primary language are the originals; posts on the secondary instance are the translations. Google does not distinguish between them when `hreflang` tags are present.
+- **Translation is optional per article.** You are never required to translate every post. TanaFlows degrades gracefully — the language switcher grays out on any post that has no matching translation, so readers never hit a dead link.
+
+---
+
+## Publishing a Multilingual Article
+
+<Steps>
+  <Step title="Create the #multilingual Internal Tag">
+    In Ghost Admin, go to **Tags** and create an internal tag with the name `#multilingual`. Internal tags start with `#` and are never shown publicly to readers — they are purely a signal to the theme.
+  </Step>
+  <Step title="Publish the Post in Your Default Language">
+    Write and publish the article on your **primary Ghost instance**. Before publishing:
+
+    - Set a clear, descriptive **Slug** (Post URL) in the post settings panel. For example: `huong-dan-su-dung`
+    - Add the **`#multilingual`** internal tag to the post.
+  </Step>
+  <Step title="Publish the Translated Post on the Secondary Instance">
+    Write and publish the translation on your **secondary language Ghost instance**. You must:
+
+    - Set the **Slug to the exact same value** as the default-language post. For example: `huong-dan-su-dung`
+    - Add the **`#multilingual`** internal tag to this post as well.
+
+    <Warning>
+      The slug for both language versions must be **100% identical** — including capitalisation and hyphens. TanaFlows uses the slug to auto-generate `hreflang` tags. A mismatch means the articles will not be linked and you will have SEO errors.
+    </Warning>
+  </Step>
+  <Step title="Verify the Link">
+    Once both posts are published with the same slug and `#multilingual` tag, TanaFlows will automatically:
+
+    - Link the language switcher between the two posts.
+    - Insert `hreflang` alternate tags in each post's `<head>` for Google.
+
+    A reader on the Vietnamese post who selects "English" in the switcher will be redirected directly to the English version, and vice versa.
+  </Step>
+</Steps>
+
+<Info>
+  You can verify that your `hreflang` implementation is correct with the [Hreflang Tag Checker](https://technicalseo.com/tools/hreflang/) tool. Run both post URLs through it to confirm there are no SEO errors before publishing.
+</Info>
+
+---
+
+## A Note on Slug Choice
+
+The slug does not affect SEO ranking. If you have an English version of an article, using an English-language slug makes it easier to read in Google search results and easier for users to remember. You can use the English slug on both Ghost instances — it will work correctly regardless of which language the post is written in.
+
+---
+
+## Localising Static UI Labels
+
+TanaFlows ships with a `locales/` directory inside the theme folder. This directory contains one JSON file per language (e.g. `en.json`, `vi.json`) that controls the static text labels shown throughout the site interface — such as the "Not translated" message displayed when a post has no counterpart translation.
+
+### How to Customise Labels
+
+<Steps>
+  <Step title="Open the Locales Directory">
+    Navigate to the `locales/` folder inside your TanaFlows theme directory. You will find one `.json` file for each language your theme supports.
+  </Step>
+  <Step title="Edit the Language File">
+    Open the file that corresponds to the language you want to customise. For example, open `vi.json` to edit Vietnamese labels or `en.json` for English labels.
+  </Step>
+  <Step title="Update the Key Values">
+    Find the key you want to change and replace its value with your preferred text. Save the file when done.
+  </Step>
+</Steps>
+
+**Example — customising Vietnamese labels in `vi.json`:**
+
+```json
+{
+  "Not translated": "Chưa có bản dịch",
+  "Back to Home": "Quay lại trang chủ"
+}
+```
+
+<Info>
+  After editing a locale file, you will need to re-upload or re-deploy the theme for the changes to take effect in Ghost. The keys (left side of each pair) must remain unchanged — only the values (right side) should be edited.
+</Info>

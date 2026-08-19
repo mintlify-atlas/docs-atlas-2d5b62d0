@@ -1,0 +1,121 @@
+---
+title: "Create a Photo Gallery Layout in Ghost with TanaFlows"
+sidebarTitle: "Gallery Layout"
+description: "Build a responsive photo gallery layout in Ghost using TanaFlows theme. Learn which template to use and how to structure your image content."
+---
+
+The **Gallery Layout** is a premium page template included with TanaFlows. It renders posts in a modern **Bento Grid** — an alternating arrangement of large and small cards that creates a visually dynamic, magazine-style layout. Beyond static images, every card can trigger an inline video player (supporting YouTube, Vimeo, and direct MP4/WebM files) via a full-screen overlay modal powered by the lightweight Plyr.js library. No plugins or third-party embeds are needed.
+
+## What the Gallery Layout Supports
+
+- Bento Grid with alternating large (2-column, 16:9) and small (1-column) cards
+- Hover effects: title and excerpt slide up with a darkening overlay on card hover
+- MP4/WebM hover preview: hovering over a card with a direct video link plays a muted preview in place of the cover image
+- Video modal: clicking the play button opens a full-screen Plyr-powered player with post title, excerpt, and a "Read Post" link below the video
+- Automatic memory management: the Plyr instance is fully destroyed when the modal is closed
+
+<Steps>
+
+  ### Apply the Gallery Layout Template
+
+  You can attach the Gallery Layout to any Ghost page in two ways.
+
+  <Tabs>
+    <Tab title="Static Page (Recommended)">
+      1. Go to **Ghost Admin → Pages → New Page**.
+      2. Enter a title for the page (e.g., *Video Gallery*, *Gallery*, *Portfolio*).
+      3. In the page settings sidebar, open the **Template** dropdown and select **Gallery Layout**.
+         - Ghost auto-detects this template from the `gallery-layout.hbs` file included in TanaFlows.
+      4. Click **Publish**.
+
+      <Note>
+        When using a static page, TanaFlows automatically fetches the **12 latest posts** using Ghost's `{{#get "posts"}}` helper. No additional configuration is required.
+      </Note>
+    </Tab>
+    <Tab title="routes.yaml (Developers)">
+      If you want the gallery to act as a homepage, a dedicated paginated section, or to be bound to a specific data source, define it via `routes.yaml`.
+
+      1. Download `routes.yaml` from **Ghost Admin → Settings → Labs → Routes**.
+      2. Add the following route block:
+
+         ```yaml title="routes.yaml — gallery layout route"
+         routes:
+           /gallery/:
+             controller: channel
+             template: gallery-layout
+             data: page.gallery
+         ```
+
+      3. Upload the modified file back to **Ghost Admin → Settings → Labs → Routes**.
+
+      <Info>
+        The `data: page.gallery` key binds the SEO metadata (title, excerpt, Open Graph image) from a Ghost page with the slug `gallery`. Create that page in Ghost Admin and fill in its meta fields.
+      </Info>
+    </Tab>
+  </Tabs>
+
+  ### Write Posts for Video Playback
+
+  Any post displayed in the gallery can optionally include a playable video. TanaFlows reads the video URL from the **feature image alt text field** — this keeps the link invisible on standard post views while Alpine.js retrieves it via the `data-video-url` attribute.
+
+  To enable video playback for a post:
+
+  1. Open the post in Ghost Editor and upload a **feature image** (this is displayed as the card cover photo).
+  2. Click the feature image and open its **Alt text** field.
+  3. Enter the video URL in the alt text field. Supported formats:
+
+     | Video type | URL format |
+     |---|---|
+     | YouTube | `https://www.youtube.com/watch?v=xxxxxx` or `https://youtu.be/xxxxxx` |
+     | Vimeo | `https://vimeo.com/xxxxxx` |
+     | Direct video (MP4 / WebM) | `https://domain.com/video.mp4` |
+
+  4. Save and publish the post.
+
+  Posts **without** a video URL in the alt text display as standard image cards. Clicking them navigates to the full post page.
+
+  <Info>
+    Using the alt text field to store the video URL keeps the gallery page clean — no raw links appear in captions or card descriptions. Alpine.js reads the value from `data-video-url="{{feature_image_alt}}"` entirely behind the scenes.
+  </Info>
+
+  ### Understand Bento Card Behaviour
+
+  Each post card in the gallery uses the `bento-card.hbs` partial. Here is how the layout and interactions work:
+
+  **Layout:**
+  - The **first card** in each row spans 2 columns with a 16:9 aspect ratio (large feature card)
+  - **Subsequent cards** span 1 column each (smaller cards), creating a rhythmic large–small–small pattern
+
+  **Hover effects:**
+  - The post title and excerpt are hidden by default
+  - Hovering over a card slides the title and excerpt up with a semi-transparent darkening overlay
+  - For cards with a **direct MP4/WebM link**, hovering also starts a **muted video preview** in place of the static cover image — moving the cursor away immediately destroys the `<video>` element to conserve RAM
+
+  **Click behaviour:**
+  - Clicking the **play button** (glassmorphic blue button at bottom-right on mobile, centred on desktop) opens the Video Modal
+  - Clicking **anywhere else on the card** navigates to the full post page
+
+  ### Use the Video Playback Modal
+
+  When the play button is clicked, a full-screen modal opens. It:
+
+  1. **Lazy-loads Plyr.js** to provide a consistent, branded player UI across YouTube, Vimeo, and MP4 sources
+  2. Displays the **post title** (bold, large white typography on a dark overlay) and **excerpt** (up to 80 words) below the video
+  3. Shows a **"Read Post"** action button with a hover arrow animation, encouraging visitors to navigate to the full article
+
+  **When the modal is closed** (via the × button, clicking outside the video container, or pressing `Escape`):
+
+  - The Plyr instance calls `.destroy()` to terminate all background scripts
+  - The video container's `innerHTML` is wiped clean to free RAM and GPU resources
+
+  <Tip>
+    For the best mobile experience, use a 16:9 feature image for every post in the gallery. This matches the large card's aspect ratio and prevents unwanted cropping or letterboxing in the modal.
+  </Tip>
+
+</Steps>
+
+## Tips for Organising Gallery Content
+
+- **Use a dedicated internal tag** (e.g., `#gallery`) and a custom route to keep gallery posts separate from your main blog feed — follow the same pattern as the [curated pages tutorial](/tutorials/create-curated-page).
+- Posts without a feature image will still render as cards, but the visual impact is much lower — always upload a feature image for gallery posts.
+- For MP4 hover previews to work, the video file must be served over HTTPS from a host that sends correct CORS headers (e.g., Cloudflare R2, Bunny CDN, or your Ghost media storage).

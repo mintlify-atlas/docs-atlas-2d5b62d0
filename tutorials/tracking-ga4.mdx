@@ -1,0 +1,147 @@
+---
+title: "Add Google Analytics 4 Tracking to Your Ghost Site"
+sidebarTitle: "GA4 Tracking"
+description: "Integrate Google Analytics 4 with your TanaFlows Ghost site. Add the GA4 measurement ID, configure events, and verify tracking is working correctly."
+---
+
+TanaFlows is built with clearly named CSS classes and IDs on every interactive element, making it straightforward to configure precise, event-level tracking without modifying theme files. This guide covers the full CSS selector reference for key components — header, biolink, product, course, and newsletter — and walks through the **Google Tag Manager (GTM)** steps needed to send those interactions to Google Analytics 4 (GA4) as named events.
+
+<Note>
+  This guide uses **Google Tag Manager** to manage tracking tags. If you prefer to inject the GA4 script directly into Ghost Code Injection, you can still use the CSS selector reference in the table below to set up GA4 Enhanced Measurement or custom events inside GA4's own interface.
+</Note>
+
+## CSS Selector Reference
+
+Use the selectors in the table below as **Trigger** firing conditions in GTM. The Recommended Event Name column follows GA4 naming conventions.
+
+<Tabs>
+  <Tab title="Header & Navigation">
+    | User Action | Target CSS Selector | GA4 Event Name | Notes |
+    |---|---|---|---|
+    | Click main CTA button | `a.btn-menu` | `header_cta_click` | Primary register/CTA button in the header's right corner |
+    | Click Search icon | `.btn-search` | `search_open` | Tracks how often users open the search overlay |
+    | Switch language | `.language-dropdown-trigger` | `language_switch` | Tracks reader language-switching behaviour |
+    | Toggle Dark Mode | `button.dark-mode-toggle` | `theme_toggle_click` | Tracks light/dark interface switching |
+  </Tab>
+  <Tab title="Biolink Page">
+    | User Action | Target CSS Selector | GA4 Event Name | Notes |
+    |---|---|---|---|
+    | Click biolink list button | `a.biolink-btn` | `biolink_link_click` | Primary buttons in the biolink list — collect `Click URL` and `Click Text` |
+    | Click Hero CTA | `a.hero-cta-button` | `biolink_hero_cta_click` | Prominent CTA in the Hero section of the author page |
+    | Click social icons | `.author-social-link` | `biolink_social_click` | Social media links (Facebook, Twitter, GitHub, etc.) |
+    | Click back to home | `a.author-nav-back-link` | `biolink_back_home` | Tracks exits from the biolink page back to the blog |
+  </Tab>
+  <Tab title="Product Page">
+    | User Action | Target CSS Selector | GA4 Event Name | Notes |
+    |---|---|---|---|
+    | Click Buy Now | `a.product-btn-primary.lemonsqueezy-button` | `product_buy_click` | Main checkout button (Lemon Squeezy, Gumroad, etc.) |
+    | Click View Live Demo | `a.product-btn-secondary#live-demo` | `product_demo_click` | Button to preview the product live demo |
+    | Click Testimonial URL | `.product-sidebar-box a` | `product_testimonial_web_click` | Click on the personal website link of a testimonial author |
+  </Tab>
+  <Tab title="Course Page">
+    | User Action | Target CSS Selector | GA4 Event Name | Notes |
+    |---|---|---|---|
+    | Click to unlock lesson | `button[data-portal="signup/free"]` | `course_unlock_click` | Logged-out users clicking the CTA to unlock a lesson |
+    | Click Start / Resume | `button` containing `@click*="setCurrentLesson"` | `course_start_click` | "Start Now" or "Continue" action buttons on a course |
+    | Select lesson in sidebar | `a.course-lesson-btn` | `course_lesson_select` | Switching lessons via the sidebar — collects `Click Text` (lesson title) |
+    | Click Next Lesson | `button` containing `@click="nextLesson"` | `course_next_lesson` | Next lesson button at the end of lesson content |
+    | Click Previous Lesson | `button` containing `@click="previousLesson"` | `course_prev_lesson` | Previous lesson button at the end of lesson content |
+  </Tab>
+  <Tab title="Newsletter & Forms">
+    | User Action | Target CSS Selector | GA4 Event Name | Notes |
+    |---|---|---|---|
+    | Submit subscription form | Form: `.subscribe-form` or Button: `form button[type="submit"]` | `newsletter_signup` | Readers successfully completing the newsletter signup form |
+  </Tab>
+</Tabs>
+
+---
+
+## Step-by-Step GTM Configuration
+
+The following steps show how to track any button from the reference table above. The example tracks the **Buy Now** button on product pages, but the same pattern applies to every selector in the table.
+
+<Steps>
+
+  ### Enable Default Click Variables in GTM
+
+  Before creating triggers, make sure GTM's built-in click variables are activated.
+
+  1. Open your **GTM workspace**.
+  2. Go to **Variables** and click **Configure** in the Built-In Variables panel.
+  3. Check all variables under the **Clicks** section:
+     - Click Element
+     - Click Classes
+     - Click ID
+     - Click Target
+     - Click URL
+     - Click Text
+
+  These variables become available inside your trigger conditions in the next step.
+
+  ### Create a Click Trigger
+
+  *Example: tracking the Buy Now button on product pages*
+
+  1. Go to **Triggers → New**.
+  2. Name the trigger: `Click - Product Buy Button`.
+  3. Select trigger type: **Click — All Elements** (or **Just Links** if the target is an `<a>` tag).
+  4. Under *This trigger fires on*, select **Some Clicks**.
+  5. Set the firing condition:
+     - **Click Classes** contains `product-btn-primary`
+     - *(Alternatively: **Click Element** matches CSS selector `a.product-btn-primary.lemonsqueezy-button`)*
+  6. Click **Save**.
+
+  <Tip>
+    Use "Click Element matches CSS selector" for the most precise matching — it mirrors exactly what you see in the selector reference table and avoids false positives from partial class name matches.
+  </Tip>
+
+  ### Configure the GA4 Event Tag
+
+  1. Go to **Tags → New**.
+  2. Name the tag: `GA4 Event - Product Buy Click`.
+  3. Select tag configuration: **Google Analytics → Google Analytics: GA4 Event**.
+  4. Select your **GA4 Configuration Tag** (or enter your Measurement ID — format: `G-XXXXXXXXXX`).
+  5. Set **Event Name** to: `product_buy_click`.
+  6. *(Optional)* Add **Event Parameters** for richer reporting:
+
+     | Parameter Name | Value | Purpose |
+     |---|---|---|
+     | `product_name` | `{{Page Title}}` | Identifies which product page was clicked |
+     | `click_url` | `{{Click URL}}` | Records the destination URL of the button |
+
+  7. Under **Triggering**, select the `Click - Product Buy Button` trigger from Step 2.
+  8. Click **Save**, then click **Submit** to publish your changes.
+
+  ### Verify Tracking Is Working
+
+  1. In GTM, click **Preview** to enter debug mode — GTM will open your site in a new tab with the debug panel active.
+  2. Navigate to a product page and click the **Buy Now** button.
+  3. In the GTM debug panel, confirm that the trigger `Click - Product Buy Button` fires and the tag `GA4 Event - Product Buy Click` is listed as **Fired**.
+  4. Open **GA4 → Reports → Realtime** and confirm that the `product_buy_click` event appears within a few seconds.
+
+  <Note>
+    GA4 Realtime reports have a short delay (usually 5–30 seconds). If the event does not appear after 60 seconds, check that your GA4 Measurement ID in the tag configuration matches the ID in your GA4 property settings (**GA4 Admin → Data Streams → Web stream → Measurement ID**).
+  </Note>
+
+</Steps>
+
+---
+
+## Applying This to Other Elements
+
+The same three-step pattern (enable variables → create trigger → create tag) works for every selector in the reference table. Some practical tracking priorities for TanaFlows sites:
+
+<CardGroup cols={2}>
+  <Card title="Affiliate & Monetization" icon="dollar-sign">
+    Track `product_buy_click` and `biolink_link_click` to measure conversion rates on your affiliate and product pages. Add a `click_url` parameter to identify which link drove each click.
+  </Card>
+  <Card title="Course Engagement" icon="graduation-cap">
+    Track `course_unlock_click`, `course_lesson_select`, and `course_next_lesson` to understand where students drop off and which lessons hold attention best.
+  </Card>
+  <Card title="Search Behaviour" icon="magnifying-glass">
+    Track `search_open` alongside GA4's built-in search term reporting to understand what topics your readers are looking for — useful for content planning.
+  </Card>
+  <Card title="Newsletter Growth" icon="envelope">
+    Track `newsletter_signup` form submissions and funnel them into a GA4 conversion to measure the impact of different CTA placements and post types on subscription rates.
+  </Card>
+</CardGroup>

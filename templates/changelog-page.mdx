@@ -1,0 +1,118 @@
+---
+title: "Changelog Page Template for Ghost with #changelog Tag"
+sidebarTitle: "Changelog Page"
+description: "Build a timeline changelog in Ghost with TanaFlows. Route #changelog posts to a vertical timeline layout with automatic Latest badges and pagination."
+---
+
+TanaFlows ships with a built-in **Timeline Layout** (`timeline-layout.hbs`) that is ideal for product changelogs, feature roadmaps, or newsletter archives. The page renders tagged posts as a chronological vertical timeline — newest entry at the top, each update automatically badged, and a **Load more** button added at the bottom when entries exceed the default page limit. Setup takes three steps: configure `routes.yaml`, create a hub page, then publish individual changelog posts with the `#changelog` internal tag.
+
+---
+
+## Step 1: Declare Routes in `routes.yaml`
+
+The changelog page uses Ghost's custom routing to filter posts by the `#changelog` tag and render them with the timeline template.
+
+<Steps>
+  <Step title="Download your current routes file">
+    Go to **Ghost Admin → Settings → Labs**, find the **Routes** section, and click **Download current routes.yaml**.
+  </Step>
+  <Step title="Add the changelog collection">
+    Open the file in any text editor and add the following block under the `collections:` key:
+
+    ```yaml
+    collections:
+      /changelog/:
+        permalink: /changelog/{slug}/
+        template: timeline-layout
+        order: published_at desc
+        filter: tag:[hash-changelog]
+        data: page.changelog
+    ```
+
+    What each line does:
+
+    | Key | Purpose |
+    |---|---|
+    | `/changelog/` | The URL where the timeline list appears (`yourdomain.com/changelog/`) |
+    | `template: timeline-layout` | Uses the theme's `timeline-layout.hbs` file |
+    | `filter: tag:[hash-changelog]` | Shows only posts tagged with `#changelog` (YAML represents `#` as `hash-`) |
+    | `data: page.changelog` | Pulls the title and description from the static Page with slug `changelog` |
+    | `order: published_at desc` | Newest entries appear at the top of the timeline |
+
+  </Step>
+  <Step title="Upload the updated file">
+    Save and upload the file back in Ghost Admin under **Settings → Labs → Routes**.
+  </Step>
+</Steps>
+
+---
+
+## Step 2: Create the Changelog Hub Page
+
+This static Ghost page supplies the title and description shown at the top of the timeline. It is not itself a changelog entry — it just provides the header content.
+
+<Steps>
+  <Step title="Create a new Page">
+    Go to **Ghost Admin → Pages → New Page**.
+  </Step>
+  <Step title="Set the title">
+    Enter a title such as `Changelog` or `What's New`.
+  </Step>
+  <Step title="Configure the page settings">
+    Open page settings (gear icon ⚙️):
+    - **Page URL (Slug):** set to exactly `changelog` — this must match `data: page.changelog` in `routes.yaml`.
+    - **Excerpt:** write a brief description shown beneath the timeline heading (e.g., *See the latest updates, new features, and improvements to TanaFlows.*).
+  </Step>
+  <Step title="Publish the page">
+    Click **Publish**. This page itself won't display a list — the timeline at `/changelog/` is rendered by the route you configured in Step 1.
+  </Step>
+</Steps>
+
+---
+
+## Step 3: Publish Changelog Updates
+
+Each new product update or announcement becomes a standard Ghost post tagged with `#changelog`.
+
+<Steps>
+  <Step title="Create a new Post">
+    Go to **Ghost Admin → Posts → New Post**.
+  </Step>
+  <Step title="Write the update">
+    - **Title:** a clear, versioned title (e.g., `Update v1.2.0: Smart Search Integration`).
+    - **Body:** the full details of the changes, additions, or fixes.
+    - **Excerpt:** a one- or two-sentence summary displayed on the timeline list view.
+  </Step>
+  <Step title="Tag the post">
+    In post settings, add the internal tag **`#changelog`** to the Tags field. Ghost automatically routes this post to the timeline collection.
+  </Step>
+  <Step title="Add an optional feature image">
+    Upload a **Feature Image** if you want a visual illustration to appear alongside the update on the timeline.
+  </Step>
+  <Step title="Publish">
+    Click **Publish**. The update appears at the top of the `/changelog/` timeline immediately.
+  </Step>
+</Steps>
+
+---
+
+## Timeline Features
+
+<CardGroup cols={2}>
+  <Card title="Vertical Timeline" icon="timeline">
+    Updates are displayed chronologically along a clean vertical timeline, newest post at the top.
+  </Card>
+  <Card title="Latest Badge" icon="badge">
+    The most recent update automatically receives a prominent **Latest** badge to draw reader attention.
+  </Card>
+  <Card title="Responsive Layout" icon="mobile">
+    On mobile devices the timeline adapts to a single-column view for comfortable reading on small screens.
+  </Card>
+  <Card title="Smart Pagination" icon="arrow-down">
+    A **Load more** button appears automatically when the number of updates exceeds the default Ghost page limit — no manual pagination setup required.
+  </Card>
+</CardGroup>
+
+<Tip>
+  The same timeline layout can be repurposed for a **public roadmap** or **newsletter archive** by changing the filter tag and collection path in `routes.yaml`. For example, use `tag:[hash-roadmap]` and `/roadmap/` to build a separate roadmap page without installing any extra templates.
+</Tip>

@@ -1,0 +1,54 @@
+---
+title: "Syntax Highlighting for Code Blocks in Ghost Posts"
+sidebarTitle: "Syntax Highlight"
+description: "Prism.js syntax highlighting with the Tomorrow dark theme, one-click copy buttons, and conditional loading — zero performance cost on posts without code blocks."
+---
+
+TanaFlows ships professional syntax highlighting out of the box for every code block in your posts. Built on the popular **Prism.js** library and styled with the dark **"Tomorrow Theme"**, code blocks are visually clear, easy to read, and equipped with a one-click copy button — without adding any weight to pages that contain no code at all.
+
+---
+
+## Key Benefits for Readers
+
+- **Automatic Language Recognition and Beautiful Styling:** Every code block — JavaScript, Python, HTML, CSS, C++, and more — is automatically highlighted using the Tomorrow dark theme. No manual language selection is required in most cases.
+- **One-Click Copy Button:** A toolbar with a **"Copy"** button appears automatically above every code block. Readers click once to copy the entire snippet to their clipboard, with no risk of missing characters or stray whitespace from manual selection.
+- **Zero Performance Impact on Non-Code Pages:** For articles that contain no code blocks, the Prism.js library is **never loaded** — not even a single byte. Pages stay at peak speed for standard readers.
+
+---
+
+## How It Works Under the Hood
+
+TanaFlows optimizes Prism.js through three mechanisms that balance gorgeous styling with maximum page performance.
+
+### 1. Conditional Loading
+
+When a visitor opens a post, the theme scans the page for code blocks (`<pre><code>` elements):
+
+- **If none are found:** The Prism.js loading process stops immediately. No scripts are fetched or executed.
+- **If code blocks are found:** The system defers loading until the browser is idle using `requestIdleCallback`. All text and images render first; the syntax highlighter loads afterward so it never blocks the initial page paint.
+
+### 2. Autoloader — Language Files on Demand
+
+Instead of loading a single large JavaScript bundle containing every supported language, TanaFlows uses Prism's intelligent **Autoloader** plugin.
+
+When an article contains a JavaScript block and a Python block, the system reads each block's language attribute and loads **only** the processing files for JavaScript and Python from the CDN. No unused language definitions are fetched, keeping bandwidth usage proportional to what the post actually needs.
+
+### 3. Separation of Styles and Logic
+
+- The **interface CSS file** (`prism-tomorrow.min.css`) is hosted directly on your server. This ensures the code block styling is consistent and rendered instantly, with no flash of unstyled code.
+- The **JavaScript files and helper plugins** — Autoloader, Toolbar, and the Copy-button plugin — are loaded asynchronously from the global Cloudflare CDN. This takes advantage of browser caching across sites that also use Prism from the same CDN origin, further reducing load time for returning visitors.
+
+---
+
+## Using Code Blocks in the Ghost Editor
+
+To add a syntax-highlighted code block to any post or page:
+
+1. In the Ghost Editor, type `/` to open the card menu and select **Code** (or use the keyboard shortcut).
+2. Paste or type your code into the code card.
+3. Set the **language** in the code card's language field (e.g., `javascript`, `python`, `html`, `css`, `bash`) so the Autoloader fetches the correct grammar file and applies accurate highlighting.
+4. Publish or preview the post — the Tomorrow Theme styling and Copy button will appear automatically.
+
+<Note>
+  If no language is specified on a code card, Prism will still render the block inside the styled frame, but token-level highlighting will not be applied. Always set the language for the best visual result.
+</Note>

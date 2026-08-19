@@ -1,0 +1,292 @@
+---
+title: "TanaFlows Changelog — Version History and Updates"
+sidebarTitle: "Changelog"
+description: "Complete version history for TanaFlows Ghost theme. See every feature added, bug fixed, and breaking change across all releases."
+---
+
+Tracking what changes between releases is one of the clearest ways to understand how actively a theme is maintained. This page records every significant update to TanaFlows — new features, performance improvements, UI refinements, bug fixes, and the rare breaking change — organized by version so you can quickly see what landed in a given release and what to watch for when upgrading. If you are on an older version, scan the entries between your current version and the latest to plan your update.
+
+<Tip>
+  The live demo sites [bepublish.com](https://bepublish.com) and [tanaflows.bepublish.com](https://tanaflows.bepublish.com) always run the latest published version of TanaFlows. Visit either site to see current features in action. Download new releases from your [Lemon Squeezy orders portal](https://app.lemonsqueezy.com/my-orders/).
+</Tip>
+
+## Version 2 Releases
+
+<AccordionGroup>
+  <Accordion title="v2.0.2 — August 4, 2026 (Latest)">
+    This release represents a massive optimization and feature update, introducing complete Alpine.js elimination, a Web Component architecture, mobile CLS fixes, dark mode logo customization, and automated build verification.
+
+    **✨ What's New**
+    - **Smarter & Lighter Core Technology** — Rebuilt related posts, post filters, comments, and course navigation as modern Web Components, making the site feel significantly faster and more responsive.
+    - **Automatic Dark Mode Logo** — A dedicated dark mode logo setting in Ghost Admin. The logo swaps automatically in dark mode without flickering.
+    - **Customizable Footer Widgets** — Easily add custom HTML or images to your footer. Images and badges automatically adapt to both Light and Dark modes.
+
+    **🚀 Performance & Improvements**
+    - **Removed Alpine.js (Overall Speed Boost)** — Completely eliminated Alpine.js, reducing page download size and improving responsiveness on all devices.
+    - **60% Faster Build Times** — Build time reduced from ~4.9 seconds down to ~1.8 seconds.
+    - **Lag-Free Comment Loading** — Multi-nested comments are processed in the background; scrolling through discussions stays smooth without screen freezes.
+    - **Instant Preloading as You Scroll** — Content preloads 800px ahead of scroll position so images and next sections appear instantly.
+    - **Instant Homepage Loading & Better SEO** — The homepage renders without delay on initial page load for both visitors and search engine crawlers.
+    - **Automated Quality Verification** — Build tools automatically verify 100% data alignment between settings and page templates before publishing.
+    - **Centralized System Settings** — Storage keys, social media links, and layout rules consolidated into a single source of truth.
+
+    **🎨 UI/UX Upgrades**
+    - **Fixed Jumping Cover Images on Mobile** — Article cover images no longer jump or resize abruptly when opened on mobile.
+    - **Better Photo Popups (Lightbox)** — Zoomed photos always display above dark background overlays with correct z-index layering.
+    - **Cleaner Comment Layout** — Reorganized comment search and filter controls; dropdown menus no longer get clipped on small screens.
+    - **Unified Icon System** — Replaced scattered inline SVGs across 30+ pages with a single streamlined icon component.
+    - **Refined Card & Dark Mode Styling** — Polished shadow effects in Light mode and clean structural borders in Dark mode.
+    - **Balanced Bento Layouts** — Grid proportions adjusted so odd numbers of posts look perfectly balanced; smoother accordion animations.
+
+    **🐛 Bug Fixes & Security**
+    - Disabled heavy page transition animations that caused stuttering; fixed scroll-locking bugs between page navigations.
+    - Standardized honeypot spam traps across subscription and footer forms.
+    - Corrected code bundling for third-party tools (security, search, video player) to prevent browser errors.
+    - Upgraded all dependencies; zero security vulnerabilities remaining.
+    - Added SRI (Subresource Integrity) cryptographic hashes to external video player scripts.
+  </Accordion>
+
+  <Accordion title="v2.0.1 — June 23, 2026">
+    A massive optimization cycle bringing smarter community features, improved search speed and security, unified hover previews, smoother video playback, and comprehensive fixes.
+
+    **✨ New Features**
+    - **Smart Markdown Copying for Comments** — Single-click Copy button on every comment bubble. Copying a parent comment automatically compiles all nested child replies with clean indentation.
+    - **Member Mention Hover Cards** — Profile preview cards appear when hovering over member profile links or user mentions.
+    - **Product Page Autoplay Videos** — The main showcase image automatically becomes a muted autoplaying video if a YouTube, Vimeo, or direct video link is placed in the description.
+    - **Floating Discussion Counters** — Live comment counter next to the Discussion title that updates automatically as new comments are added.
+    - **Pinned Comments** — Sticky or pinned comments display a clear pin icon alongside translation labels.
+
+    **🚀 Speed & Security**
+    - **Lazy Runtime Loading for Service Workers** — Site assets load dynamically as visitors browse rather than being downloaded upfront, eliminating network congestion on slower connections.
+    - **Deferred Font Preloading** — Large font files removed from upfront caching to save mobile data.
+    - **Smart CDN & Asset Whitelisting** — Background cache manager dynamically whitelists assets to prevent local files from redirecting to broken links.
+    - **Enhanced Anti-Spam Security** — Browser security tokens migrated to secure local slots, ensuring robust protection in Safari's Private Browsing mode.
+    - **Typo Suggestions and Search Compiling** — Search index now compiles gracefully even on spotty connections when individual pages fail to load.
+
+    **🎨 UI/UX**
+    - **Smarter Long Comments** — Comment height capped at 600px (up from 480px) with a fade-out mask and toggle button.
+    - **Wikipedia-Style Hover Previews** — Internal links inside post bodies now show rich preview cards with reading duration, author profile, title, and description.
+    - **Double Play Button Fix** — Removed duplicate play buttons overlapping YouTube overlays; replaced with minimal glass-effect play button.
+    - **Keyboard Navigation** — `Escape` key dismisses open previews or video overlays cleanly.
+  </Accordion>
+
+  <Accordion title="v2.0.0 — April 27, 2026">
+    A major architecture release focused on blazing-fast performance, powerful new search capabilities, and a fully code-free homepage builder.
+
+    **✨ New**
+    - **Dual Search System** — Switch between Ghost's native search and the new lightning-fast Smart Search directly from Ghost Admin.
+    - **Global Quick Search** — `Ctrl/Cmd + K` opens a search modal that understands and forgives minor typos.
+    - **Smart 404 Suggestions** — Broken links now analyze the typo and suggest the most likely target articles.
+    - **Author Biolink Pages** — Every author gets a mobile-friendly personal landing page with custom links, bio, and branded post lists.
+    - **"Plug-and-Play" Homepage** — Build, arrange, and manage the entire homepage layout from Ghost Admin — no code required.
+    - **Auto-Dropdown Menus** — Create nested menus by adding a `-` prefix to links in the navigation dashboard.
+    - **Menu Badges** — Add "New" or "Hot" highlights directly to navigation menu items.
+    - **Shareable Lesson Links** — Every course lesson now has its own unique URL for bookmarking and sharing.
+    - **Blank Canvas Template** — A page template with header and footer intact but a completely empty body for custom designs.
+
+    **🚀 Improvements**
+    - Instant-load lessons via background video preloading.
+    - Smart video pausing — playing a new video auto-pauses others.
+    - Language-scoped search — English searches return only English posts; Vietnamese only Vietnamese posts.
+    - Manual related post control for precision keyword targeting.
+
+    **🎨 UI/UX**
+    - Skeleton loading screens for menus and post lists.
+    - Upgraded fonts to *Geist Sans* and *Geist Mono*.
+    - Smooth image zoom with scroll-to-close gesture.
+    - Smart Table of Contents that auto-hides deep sub-headings.
+    - Bento Grid 1+4 layout for featured posts.
+    - Entire post preview cards are now one clickable target.
+    - Global audience language support: Spanish, French, Japanese, and Chinese added.
+  </Accordion>
+</AccordionGroup>
+
+## Version 1 Releases
+
+<AccordionGroup>
+  <Accordion title="v1.4.5 — January 10, 2026">
+    Focused on performance optimization, enhanced LMS features, and a smart link system designed to boost SEO, security, and user engagement.
+
+    **✨ New**
+    - **Quick Navigation (TOC Pill)** — Floating menu to jump to any part of an article instantly.
+    - **Safe & Easy External Links** — External links now open in a new tab automatically with `rel="noopener"`.
+    - **Live Member Count** — Stylish community counter in the footer.
+    - **One-Tap Code Copy** — Copy code snippets with a single click.
+
+    **🚀 Improvements**
+    - Courses now organized into clear chapters.
+    - Instant page opening with speculative loading.
+    - Full-HD image zoom with fast surrounding page performance.
+    - Simplified homepage showing only the most important content.
+
+    **🎨 UI/UX**
+    - Modern, cleaner link and preview card styles.
+    - Intersection Observer-based animations that only run when visible (battery and data saving).
+  </Accordion>
+
+  <Accordion title="v1.4.4 — December 1, 2025">
+    Bug fixes, improvements, and new features enhancing user experience and course functionality.
+
+    **✨ New**
+    - Changed to Source Sans with Inter Variable fonts for better readability.
+    - Language switch button in the desktop header.
+    - TextCourse feature launch.
+    - Next button on course pages for easier navigation.
+
+    **🐛 Bug Fixes**
+    - Text highlighting in dark mode fixed.
+    - HTML Video Course playback errors resolved.
+    - Featured posts filter issue corrected.
+    - Multilingual slug redirect errors fixed.
+    - Logo URL issues for second-language sites corrected.
+    - SVG logo display improved.
+
+    **💡 Info**
+    - New tutorial: [Deploy multilingual Ghost with Railway](/multilingual/hosting-guide).
+    - Rebranded bePublish copyright branding.
+  </Accordion>
+
+  <Accordion title="v1.4.3 — September 20, 2025">
+    Video integration enhancements, UI improvements, and fixes for a more seamless course experience.
+
+    **✨ New**
+    - **Mux Integration** — Mux Player added to the course template with automatic accent color adaptation and built-in statistics (the same infrastructure used by Skool). Works with public videos only.
+    - **Loom Integration** — Loom added to the course template with auto-hidden titles, tips, comments, and feedback options.
+    - Welcome popup feature (similar to Substack's).
+
+    **🐛 Bug Fixes**
+    - Author page issues resolved.
+    - Social media URL bugs fixed.
+    - Blockquote font style corrected.
+    - Bunny Video, HTML5 video, and YouTube playback issues on course pages fixed.
+
+    **🎨 Improvements**
+    - Date field changed from `published_at` to `updated_at` for accuracy.
+    - Search JavaScript updated for child search compatibility with Ghost 6.
+    - Dependencies updated to latest versions.
+
+    **♻️ Removed**
+    - `llms.txt` removed due to incompatibility with Ghost 6 routing.
+  </Accordion>
+
+  <Accordion title="v1.4.2 — August 22, 2025">
+    Compatibility update for Ghost 6.
+
+    **✨ New**
+    - Added `isAccessibleForFree` schema property to paid posts to enhance SEO visibility and prevent Google penalties for paywalled content.
+
+    **🐛 Bug Fixes**
+    - Fixed child search error when multiple tags are assigned.
+
+    **🎨 Improvements**
+    - Removed `limit=all` parameters to ensure compatibility with Ghost 6.0.
+  </Accordion>
+
+  <Accordion title="v1.4.1 — June 19, 2025">
+    **New**
+    - Added `post-content` and `page-content` CSS classes for better styling control.
+    - Added Bluesky comments support.
+    - Added automatic profile verification for Bluesky links.
+
+    **🎨 Improvements**
+    - Refactored child search functionality.
+    - Improved breadcrumb navigation with backward traversal support.
+
+    **🐛 Bug Fixes**
+    - Fixed word-breaking for inline code elements.
+    - Fixed missing LinkedIn social media link.
+    - Fixed card asset display on post and page layouts.
+
+    **♻️ Removed**
+    - Mastodon replaced with Bluesky.
+  </Accordion>
+
+  <Accordion title="v1.4.0 — June 7, 2025">
+    **✨ New**
+    - Automatic `llms.txt` generation for AI crawler discoverability.
+    - Speculative Loading for faster page transitions.
+    - Social media links in author box: LinkedIn, Facebook, Instagram, Twitter, YouTube, TikTok, X.
+
+    **🎨 Improvements**
+    - Enhanced light mode color display.
+    - Updated all dependencies.
+
+    **🐛 Bug Fixes**
+    - Fixed `z-index` menu issue at the top of pages.
+
+    **♻️ Removed**
+    - Switched from local fonts to Bunny fonts for better multi-language support.
+  </Accordion>
+
+  <Accordion title="v1.3.0 — November 19, 2024">
+    **✨ New**
+    - Added custom font support following Ghost v5.101.0 with 21 typeface options including Inter, Merriweather, Lora, Space Grotesk, JetBrains Mono, and more.
+    - Switched default font to local Inter variable font for best performance and multi-language compatibility.
+  </Accordion>
+
+  <Accordion title="v1.2.9 — August 31, 2024">
+    **✨ New**
+    - FastComments added as the 8th supported comment platform.
+    - Option to remove all Ghost, ghostFam, and TanaFlows branding.
+    - Blank Template for freely styled static pages.
+    - Self-hosted options for `portal.js`, `comment.js`, and `sodosearch.js`.
+    - Sponsored Section on the homepage controlled by `#affiliate` and `#sponsored` internal tags.
+    - Mastodon added as a social platform with auto-verification.
+
+    **🎨 Improvements**
+    - Readable URL format for the author box.
+    - Improved Guest Posts section display.
+    - Child search keyboard shortcut: `Ctrl + K`.
+    - Welcome popup disabled by default (enable in Design settings).
+    - Better anti-spam bot protection.
+  </Accordion>
+
+  <Accordion title="v1.2.8 — February 10, 2024">
+    **✨ New**
+    - Instant Page JS for link hover preloading (1KB gzipped).
+    - Auto-generated FAQ schema for toggle cards via `#faq-schema-toggle`.
+    - Course page template and course hub page.
+    - Member count at subscribe form.
+    - Previous/next post navigation for SEO.
+    - Redesigned homepage with newsletter section (`#newsletter` tag).
+    - `#no-homepage` and `#no-featured` tags for post display control.
+    - Brand block for Product pages.
+
+    **🐛 Bug Fixes**
+    - Fixed date/time display on post cards and featured posts.
+    - Fixed CSS for Product page template.
+    - Fixed font issues; switched to Bunny fonts.
+  </Accordion>
+
+  <Accordion title="v1.2.7 — January 4, 2024">
+    **✨ New**
+    - New TanaFlows Documentation Site launched.
+    - New Product page template for e-commerce-style product pages.
+    - Child search on single tag pages and related posts.
+    - HTML Form generator tool.
+
+    **🎨 Improvements**
+    - Tag page redesigned as an HTML sitemap for navigation and SEO.
+    - Single tag page redesigned with four-column layout.
+    - Blog header redesigned with datetime metadata.
+    - Author name separated with `,` instead of `|` in post cards.
+  </Accordion>
+
+  <Accordion title="v1.2.6 — December 11, 2023">
+    **✨ New**
+    - Giscus comments with multi-language support and auto dark mode.
+    - Child search on the grid-layout template with tag filtering.
+
+    **🎨 Improvements**
+    - Pagination navigation bar translation added.
+    - Dark mode button added as footer fallback for mobile.
+    - Contact page redesigned with `#hide_form` tag support.
+    - Multi-author box support on single posts.
+    - Related posts redesigned.
+    - Subscribe form on footer auto-hides when members are disabled.
+  </Accordion>
+
+  <Accordion title="v1.0.0 — July 21, 2023">
+    ✨ **TanaFlows officially launched.**
+  </Accordion>
+</AccordionGroup>

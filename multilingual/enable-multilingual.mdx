@@ -1,0 +1,86 @@
+---
+title: "Enable Multilingual Mode in TanaFlows Ghost Theme"
+sidebarTitle: "Enable Multilingual"
+description: "Configure TanaFlows multilingual settings in Ghost Admin. Set languages, root URL, and understand how the language switcher works for static and content pages."
+---
+
+TanaFlows includes a professional multilingual feature that requires no modifications to system configuration files or theme code. You activate and configure everything directly inside Ghost Admin through three Custom Settings, and the theme handles language switching and SEO automatically from there.
+
+## How the Language Switcher Behaves
+
+Before diving into configuration, it helps to understand what the language switcher actually does in different contexts:
+
+- **Static pages (Homepage, Blog listing, Category pages)** — the switcher is always visible and clickable. Visitors can freely jump between language editions at any time.
+- **Content pages (Posts and custom Pages):**
+  - **If a translation exists** (the post has the `#multilingual` tag and a matching slug on the other instance) — the switcher works normally and takes the reader directly to the translated version.
+  - **If no translation exists** — the switcher is **grayed out and locked** (unclickable) and shows the label "Not translated." This prevents readers from clicking through to a missing page and hitting a 404 error.
+
+---
+
+## Configuration Steps
+
+All three settings live in **Ghost Admin → Settings → Design → Custom Settings** for the TanaFlows theme.
+
+<Steps>
+  <Step title="Enable Multilingual">
+    Find the **Enable Multilingual** toggle and switch it to **On**. This activates the language switcher across your site.
+  </Step>
+  <Step title="Set Your Languages">
+    In the **Languages** field, enter the list of languages your site supports using this format:
+
+    ```text
+    language_code|Display_Name
+    ```
+
+    Separate multiple languages with a comma. For example:
+
+    ```text
+    vi|Tiếng Việt,en|English
+    ```
+
+    <Info>
+      The **first language** in the list becomes the **Default Language**. Posts in the default language will not carry a language prefix in their URL — they live at the root domain. All subsequent languages will be served from a subdirectory matching their `language_code`.
+    </Info>
+  </Step>
+  <Step title="Set the Root URL">
+    In the **Root URL** field, enter your primary domain without a trailing slash:
+
+    ```text
+    https://tanaflows.com
+    ```
+
+    TanaFlows uses this value to construct the correct cross-language URLs for the switcher and for SEO `hreflang` tags.
+  </Step>
+</Steps>
+
+---
+
+## Language Format Reference
+
+| Format | Meaning |
+|---|---|
+| `vi\|Tiếng Việt` | Language code `vi`, displayed as "Tiếng Việt" |
+| `en\|English` | Language code `en`, displayed as "English" |
+| `de\|Deutsch` | Language code `de`, displayed as "Deutsch" |
+
+A full two-language entry looks like:
+
+```text
+vi|Tiếng Việt,en|English
+```
+
+The resulting switcher will show **Tiếng Việt** and **English** as options, with `vi` being the default (no prefix in URLs) and `en` served from `/en/`.
+
+---
+
+## What Happens After Saving
+
+Once you save the Custom Settings, TanaFlows will:
+
+1. Render the language switcher in the site header on all pages.
+2. Automatically generate `hreflang` alternate link tags in the `<head>` of each post that has the `#multilingual` tag, keeping your multilingual SEO aligned with Google's guidelines.
+3. Gray out the switcher on any content page that does not yet have a matching translated post.
+
+<Note>
+  The **Root URL** setting is required for the switcher to build correct absolute URLs. Without it, cross-site language links will not resolve properly.
+</Note>

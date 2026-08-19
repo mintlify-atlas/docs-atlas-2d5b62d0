@@ -1,0 +1,78 @@
+---
+title: "CTA Banner: Drive Conversions with Announcement Bars"
+sidebarTitle: "CTA Banner"
+description: "A site-wide CTA banner above the footer — configure the button URL in Ghost Custom Settings and customize title, description, and button text via Code Injection."
+---
+
+The site-wide **CTA Banner** is a large layout element placed at the bottom of every page, directly above the footer. It is one of the most effective conversion tools in TanaFlows — ideal for growing newsletter subscribers, driving course enrollments, promoting community groups, or directing readers to a product landing page.
+
+All content and link configuration is managed entirely from **Ghost Admin**, with no theme edits required.
+
+---
+
+## Step 1: Configure the Button URL
+
+The CTA button redirects readers to the destination of your choice when clicked. Set the target URL through Ghost's Custom Settings:
+
+<Steps>
+  <Step title="Open Custom Settings">
+    Go to **Ghost Admin > Settings > Design > Custom Settings** (sometimes labeled Custom Brand).
+  </Step>
+  <Step title="Find the CTA Banner field">
+    Locate the **CTA Banner** (or `cta_banner`) field in the list of custom settings.
+  </Step>
+  <Step title="Enter the destination URL">
+    Type or paste the full URL of the page you want to direct readers to. For example: `https://tanaflows.com/challenge-30-days/`
+  </Step>
+  <Step title="Save">
+    Click **Save**. The button on the banner will now point to your chosen URL.
+  </Step>
+</Steps>
+
+---
+
+## Step 2: Customize the Banner Content
+
+The title, description, and button label displayed on the banner are customized through Ghost's **Code Injection** feature, giving you full control without touching theme files.
+
+<Steps>
+  <Step title="Open Code Injection">
+    Go to **Ghost Admin > Settings > Code Injection**.
+  </Step>
+  <Step title="Paste the configuration script">
+    In the **Site Header** box, paste the following snippet:
+
+    ```html
+    <!-- CTA Banner Configuration -->
+    <script>
+        window.ctaConfig = {
+           title: "Cure Draft Hoarding & Writer's Block",
+           desc: "✨ Join the 30-Day Challenge to get the (Free) Tana Second Brain Nursery Template. A system that automatically guides ideas and pushes you to publish daily.",
+           btn: "VIEW GUIDE & GET TEMPLATE"
+        };
+    </script>
+    ```
+  </Step>
+  <Step title="Edit the content values">
+    Replace the text inside the double quotes with your own copy:
+
+    - `title` — the main heading of the banner, displayed in bold and at large size.
+    - `desc` — the supporting description that persuades readers to act. Emojis are supported and encouraged for visual appeal.
+    - `btn` — the label text shown on the CTA button.
+  </Step>
+  <Step title="Save and verify">
+    Click **Save**, then reload your website to confirm the banner reflects your changes.
+  </Step>
+</Steps>
+
+---
+
+## Fallback and Live Updates
+
+<Info>
+  **Fallback Text:** If the `window.ctaConfig` script is not configured, the theme automatically uses built-in default text that is translated based on your site's active language setting. The banner will always display something sensible out of the box.
+</Info>
+
+<Tip>
+  **Instant Updates:** Changes made to the Code Injection script take effect on your website immediately — no theme reinstallation or cache clearing is required.
+</Tip>

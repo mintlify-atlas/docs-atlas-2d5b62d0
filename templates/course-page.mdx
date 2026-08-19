@@ -1,0 +1,368 @@
+---
+title: "Course Page Template: Host Video Courses on Ghost"
+sidebarTitle: "Course Page"
+description: "Build a full video course page in Ghost using TanaFlows. Supports YouTube, Vimeo, BunnyCDN, HTML5, Alugha, Mux, and Loom as video sources."
+---
+
+TanaFlows includes a dedicated **Course** page template that transforms any Ghost page into a fully featured video course hub — complete with a lesson sidebar, progress tracking, and a video player. The template works with seven major video platforms, and you select the platform simply by assigning a single internal tag to the page. Lesson data is injected via a `window.lessons` JavaScript array inside a Ghost HTML card, so you never need to touch theme files.
+
+---
+
+## Step 1: Create the Course Page
+
+<Steps>
+  <Step title="Create a new Page in Ghost Admin">
+    Go to **Ghost Admin → Pages → New Page**. Using a Page (rather than a Post) is recommended so the course does not appear in your blog feed.
+  </Step>
+  <Step title="Select the Course template">
+    Open page settings (gear icon ⚙️) and set the **Template** field to **`Course`**.
+  </Step>
+  <Step title="Assign a platform tag">
+    In the **Tags** field, add the internal tag that matches your video hosting platform:
+
+    | Platform | Tag to assign |
+    |----------|---------------|
+    | YouTube  | `#youtube`    |
+    | Vimeo    | `#vimeo`      |
+    | BunnyCDN | `#bunny`      |
+    | HTML5 / MP4 | `#htmlvideo` |
+    | Alugha   | `#alugha`     |
+    | Mux      | `#mux`        |
+    | Loom     | `#loom`       |
+
+  </Step>
+  <Step title="Add the hero content">
+    Fill in the page **Title**, **Feature Image**, and **Excerpt** as usual. The excerpt appears as a short description beneath the course title.
+  </Step>
+</Steps>
+
+---
+
+## Step 2: Inject the Lesson List via HTML Card
+
+The course player reads its lesson list from a global JavaScript variable called `window.lessons`. You define this array inside a **Ghost HTML card** in the page editor — no plugin or external service is required.
+
+<Note>
+  In the Ghost editor, click the **+** icon and choose the **HTML** card. Paste the appropriate script block from the platform tabs below directly into that card.
+</Note>
+
+<Tabs>
+  <Tab title="YouTube">
+    For YouTube, `videoUrl` is the **11-character Video ID** found in the URL.
+
+    ```javascript
+    <script>
+        window.lessons = [
+            {
+                "title": "Lesson 1: Orientation",
+                "videoUrl": "WqASI-p-dJM"
+            },
+            {
+                "title": "Lesson 2: Everything is a Node",
+                "videoUrl": "v6C7t6l8iL4"
+            },
+            {
+                "title": "Lesson 3: Data about Nodes",
+                "videoUrl": "f4FcNhlU7G4"
+            },
+            {
+                "title": "Lesson 4: Search in Tana",
+                "videoUrl": "ohisZOdNNFY"
+            },
+            {
+                "title": "Lesson 5: Supertag Basics",
+                "videoUrl": "JPxYt1RNB7E"
+            },
+            {
+                "title": "Lesson 6: Supertag + Search",
+                "videoUrl": "2O_-l_RAr9Q"
+            }
+        ];
+    </script>
+    ```
+
+    **How to find your YouTube Video ID:**
+
+    | URL format | Example | Video ID location |
+    |---|---|---|
+    | `youtube.com/watch?v=` | `…watch?v=8XoSspXg2iU&list=…` | Characters after `v=` → `8XoSspXg2iU` |
+    | `youtu.be/` | `https://youtu.be/dQw4w9WgXcQ` | Characters after `/` → `dQw4w9WgXcQ` |
+    | `youtube.com/embed/` | `…/embed/FfJ4m75v0zU` | Characters after `/embed/` → `FfJ4m75v0zU` |
+
+    The Video ID is always an **11-character string** of letters, numbers, hyphens, or underscores.
+  </Tab>
+
+  <Tab title="Vimeo">
+    For Vimeo, `videoUrl` is the numeric video ID, followed by the `?h=` privacy hash if the video is unlisted or private.
+
+    ```javascript
+    <script>
+        window.lessons = [
+            {
+                "title": "Lesson 1: Orientation",
+                "videoUrl": "90553795?h=1d774ad316"
+            },
+            {
+                "title": "Lesson 2: Everything is a Node",
+                "videoUrl": "77895795?h=1d77fg5616"
+            },
+            {
+                "title": "Lesson 3: Data about Nodes",
+                "videoUrl": "89505795?h=1d7748ig9"
+            },
+            {
+                "title": "Lesson 4: Search in Tana",
+                "videoUrl": "8890795?h=2346ad396"
+            },
+            {
+                "title": "Lesson 5: Supertag Basics",
+                "videoUrl": "67323795?h=345t4ad318"
+            },
+            {
+                "title": "Lesson 6: Supertag + Search",
+                "videoUrl": "1243795?h=1d6u7d317"
+            }
+        ];
+    </script>
+    ```
+
+    <Note>
+      Vimeo videos set to **Private** or **Hide from Vimeo** require the `?h=xxxxxxxx` parameter appended to the video ID, as shown above. You can find this hash in the video's share/embed URL in your Vimeo dashboard.
+    </Note>
+  </Tab>
+
+  <Tab title="BunnyCDN">
+    For Bunny Stream, `videoUrl` follows the format `<Video Library ID>/<Video ID>`.
+
+    ```javascript
+    <script>
+        window.lessons = [
+            {
+                "title": "1. Pro Video Hosting Bunny Stream",
+                "videoUrl": "497120/99961679-0697-4ce0-b2bf-de0c4e58bbf8"
+            },
+            {
+                "title": "2. Unlocking Bunny Stream",
+                "videoUrl": "497120/03fe26ab-7fbc-44b6-9f31-c04e2eaeee24"
+            },
+            {
+                "title": "3. Bunny Stream Hosting Tested",
+                "videoUrl": "497120/5a215ff1-0134-45c6-bf36-fdbd8af018f7"
+            },
+            {
+                "title": "4. Bunny Stream vs Presto Player",
+                "videoUrl": "497120/93b5ebcb-1244-4aab-aef1-329fbb361ebc"
+            },
+            {
+                "title": "5. Secure Videos with Bunny CDN",
+                "videoUrl": "497120/15c4cafc-9b4e-470d-a125-2f9076367c74"
+            },
+            {
+                "title": "6. The Creator Dilemma",
+                "videoUrl": "497120/63b97de8-90e2-4009-822b-8423af9b56b8"
+            }
+        ];
+    </script>
+    ```
+
+    <Note>
+      **Finding your Bunny IDs:** The **Video Library ID** (e.g. `497120`) appears in your browser's address bar when you open a Stream library. The **Video ID** (e.g. `63b97de8-…`) appears when you click on an individual uploaded video. Do **not** add a leading `/` to the `videoUrl` value.
+
+      Bunny Stream is an affordable CDN with built-in anti-download (DRM) protection. The Enterprise plan additionally blocks screen recording.
+    </Note>
+  </Tab>
+
+  <Tab title="HTML5">
+    For self-hosted or cloud-stored MP4 files, `videoUrl` is the full direct URL to the video file.
+
+    ```javascript
+    <script>
+        window.lessons = [
+            {
+                "title": "1. Pro Video Hosting with Bunny Stream",
+                "videoUrl": "https://filedn.com/lhV3z2cisrdF5Xh66hpsU4L/Pro_Video_Hosting__Bunny_Stream.mp4"
+            },
+            {
+                "title": "2. Getting Started with Bunny Stream",
+                "videoUrl": "https://filedn.com/lhV3z2cisrdF5Xh66hpsU4L/Unlocking_Bunny_Stream.mp4"
+            },
+            {
+                "title": "3. Practical Look at Bunny Stream Hosting",
+                "videoUrl": "https://filedn.com/lhV3z2cisrdF5Xh66hpsU4L/BunnyStream__Hosting_Tested.mp4"
+            },
+            {
+                "title": "4. Bunny Stream and Presto Player",
+                "videoUrl": "https://filedn.com/lhV3z2cisrdF5Xh66hpsU4L/Pro_Video_Hosting__Bunny_Stream.mp4"
+            },
+            {
+                "title": "5. Safeguarding Your Videos with Bunny CDN",
+                "videoUrl": "https://filedn.com/lhV3z2cisrdF5Xh66hpsU4L/Secure_Videos_with_Bunny_CDN.mp4"
+            },
+            {
+                "title": "6. The Content Creator's Challenge",
+                "videoUrl": "https://filedn.com/lhV3z2cisrdF5Xh66hpsU4L/The_Creator_s_Dilemma.mp4"
+            }
+        ];
+    </script>
+    ```
+
+    <Note>
+      You can host MP4 files in any publicly accessible cloud storage — pCloud (Public folder), Cloudflare R2, Amazon S3, or similar. The URL must be a direct link ending in `.mp4` (or `.webm`).
+    </Note>
+  </Tab>
+
+  <Tab title="Alugha">
+    For Alugha, `videoUrl` is the UUID-style video identifier shown in the video's share URL.
+
+    ```javascript
+    <script>
+        window.lessons = [
+            {
+                "title": "1. Machine Learning & AI",
+                "videoUrl": "672295f0-0fc1-11f0-87c1-39ab68928003"
+            },
+            {
+                "title": "2. Ace the MAT Test",
+                "videoUrl": "67c8da50-0fbc-11f0-b1a2-b1b61c56fbd3"
+            },
+            {
+                "title": "3. Common Uni Application Mistakes",
+                "videoUrl": "770b5a90-0ece-11f0-bd7d-7b12a3d01666"
+            },
+            {
+                "title": "4. Get into St Andrews for Psychology",
+                "videoUrl": "206736f0-1126-11f0-87c1-39ab68928003"
+            },
+            {
+                "title": "5. Get into Bocconi Masters in Finance",
+                "videoUrl": "19abae50-105d-11f0-b1a2-b1b61c56fbd3"
+            },
+            {
+                "title": "6. Smash Your GCSE Exams",
+                "videoUrl": "b16f5de0-1071-11f0-bd7d-7b12a3d01666"
+            }
+        ];
+    </script>
+    ```
+
+    <Note>
+      Alugha is a free multilingual video platform. Embedding Alugha videos on your own website requires a paid Alugha plan.
+    </Note>
+  </Tab>
+
+  <Tab title="Mux">
+    For Mux, `videoUrl` is the video's **Playback ID** — not the Asset ID.
+
+    ```javascript
+    <script>
+        window.lessons = [
+            {
+                "title": "1. Stream videos in five minutes",
+                "videoUrl": "g11xsFT2MA9E92016CuQTSh8kv01aaUhJK"
+            },
+            {
+                "title": "2. Start live streaming",
+                "videoUrl": "ynJku5M7FMPVGZpd2qkNnAMW00jgt1yQMmigr64QJ7hc"
+            },
+            {
+                "title": "3. Play your videos",
+                "videoUrl": "01b2r4H6Pg8Q01NJZGppCu6X6tmfP6f6Jtp5oFZaETUwU"
+            },
+            {
+                "title": "4. Make API requests",
+                "videoUrl": "EcHgOK9coz5K4rjSwOkoE7Y7O01201YMIC200RI6lNxnhs"
+            },
+            {
+                "title": "5. Make API requests with Postman",
+                "videoUrl": "ub1CcCuqhGNuMuJ9fh3OdDD0001w7oQxDn38wjpdbbUP8"
+            },
+            {
+                "title": "6. Get thumbnails and images from a video",
+                "videoUrl": "i2601kxZN02xxWWBzkGspI97yO4CjrlX4vunqqtiFsbOw"
+            }
+        ];
+    </script>
+    ```
+
+    <Warning>
+      Always use the **Playback ID** for `videoUrl`. The Asset ID is a different identifier in Mux and will not play correctly.
+    </Warning>
+  </Tab>
+
+  <Tab title="Loom">
+    For Loom, `videoUrl` is the share ID found after `/share/` in the Loom share URL, including the `?sid=` parameter.
+
+    ```javascript
+    <script>
+        window.lessons = [
+            {
+                "title": "1. How to record your first video",
+                "videoUrl": "2bff5385f32643ea9d065227ebfadd0d?sid=16130c54-a603-4176-87b8-3659e75b3a9f"
+            },
+            {
+                "title": "2. How to share your video",
+                "videoUrl": "31f430c1a1e744b8a7b6c18a26982c71?sid=81b1e541-9355-4836-9f2f-d40bf4b831a3"
+            },
+            {
+                "title": "3. How to interact with a video",
+                "videoUrl": "9be5bf7764a94315bd44f1b0747abf37?sid=8832cd0d-7679-4949-a17f-f144362aca89"
+            },
+            {
+                "title": "4. How to work async using Loom",
+                "videoUrl": "d1d9c783701043eaa9b882e604daedcd?sid=481bfc92-95d0-44f3-bd99-23b518b21b65"
+            },
+            {
+                "title": "5. Deliver feedback with Loom",
+                "videoUrl": "0dd0a01e10c742b28dbea75082c08635?sid=9c4c0065-a6ff-4783-a668-3b2e368614ad"
+            },
+            {
+                "title": "6. Explain an internal process",
+                "videoUrl": "9e649b8c9bcf4b258401fa13d9334cb7?sid=1c839ec5-b84e-4864-8852-c5c6619cfe82"
+            }
+        ];
+    </script>
+    ```
+
+    <Note>
+      Copy the Loom share URL for each video — it looks like `https://www.loom.com/share/xxxxxx?sid=31bc487a-…`. Use everything after `/share/` (including the `?sid=` parameter) as the `videoUrl` value.
+    </Note>
+  </Tab>
+</Tabs>
+
+---
+
+## Step 3: Add a Course Introduction for SEO
+
+After the HTML card containing `window.lessons`, continue writing in the Ghost editor as normal. Any body content you add to the page will render as an **Introduction** section below the video player. This long-form content is indexed by search engines and can significantly improve organic discovery of your course page.
+
+<Tip>
+  Write a thorough introduction — cover what students will learn, prerequisites, and who the course is for. This content is the primary SEO signal for the page since the video itself is not crawlable.
+</Tip>
+
+---
+
+## Platform Summary
+
+<CardGroup cols={2}>
+  <Card title="YouTube" icon="youtube">
+    Use the 11-character Video ID from the `v=` parameter, `youtu.be/` path, or `/embed/` path. Tag: `#youtube`
+  </Card>
+  <Card title="Vimeo" icon="vimeo">
+    Use the numeric video ID. Append `?h=<hash>` for private or unlisted videos. Tag: `#vimeo`
+  </Card>
+  <Card title="BunnyCDN" icon="cloud">
+    Combine Library ID and Video ID as `libraryId/videoId`. No leading slash. Tag: `#bunny`
+  </Card>
+  <Card title="HTML5 / MP4" icon="film">
+    Use the full direct URL to the `.mp4` or `.webm` file hosted on any public storage. Tag: `#htmlvideo`
+  </Card>
+  <Card title="Alugha" icon="globe">
+    Use the UUID shown in the Alugha video share URL. Embedding requires a paid Alugha account. Tag: `#alugha`
+  </Card>
+  <Card title="Mux" icon="play">
+    Use the **Playback ID** only — never the Asset ID. Tag: `#mux`
+  </Card>
+  <Card title="Loom" icon="video">
+    Use the share ID from after `/share/` in the Loom URL, including `?sid=`. Tag: `#loom`
+  </Card>
+</CardGroup>

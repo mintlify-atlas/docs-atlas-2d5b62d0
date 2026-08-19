@@ -1,72 +1,100 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
-  "name": "Mintlify Starter Kit",
+  "name": "TanaFlows",
+  "theme": "willow",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#ffffff",
+    "light": "#5555ec",
+    "dark": "#b6b6fb"
   },
-  "favicon": "/favicon.svg",
-  "navigation": {
-    "pages": [
-      {
-        "group": "Getting Started",
-        "pages": [
-          "index",
-          "quickstart"
-        ]
-      }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
-  },
+  "favicon": "https://media.brand.dev/1490dd80-a19a-4d95-a0b6-7f5f342f80c3.png",
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "https://media.brand.dev/1fb000a0-295a-4035-8ef3-9b70df054870.svg",
+    "dark": "https://media.brand.dev/1fb000a0-295a-4035-8ef3-9b70df054870.svg"
   },
   "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
-      }
-    ],
     "primary": {
-      "type": "button",
-      "label": "Dashboard",
-      "href": "https://app.mintlify.com"
+      "type": "github",
+      "href": "https://github.com/jamstack-sites/flows-1"
     }
-  },
-  "contextual": {
-    "options": [
-      "copy",
-      "view",
-      "chatgpt",
-      "claude",
-      "perplexity",
-      "mcp",
-      "cursor",
-      "vscode"
-    ]
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "github": "https://github.com/jamstack-sites/flows-1"
     }
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "introduction",
+              "installation",
+              "changelog"
+            ]
+          },
+          {
+            "group": "Features",
+            "pages": [
+              "features/smart-search",
+              "features/seo-schema",
+              "features/ai-share",
+              "features/author-biolink",
+              "features/child-search",
+              "features/syntax-highlight",
+              "features/lightbox",
+              "features/cta-banner"
+            ]
+          },
+          {
+            "group": "Page Templates",
+            "pages": [
+              "templates/home-page",
+              "templates/course-page",
+              "templates/product-page",
+              "templates/changelog-page",
+              "templates/contact-page"
+            ]
+          },
+          {
+            "group": "Multilingual",
+            "pages": [
+              "multilingual/hosting-guide",
+              "multilingual/enable-multilingual",
+              "multilingual/multilingual-articles"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Integrations",
+        "groups": [
+          {
+            "group": "Comment Systems",
+            "pages": [
+              "integrations/giscus",
+              "integrations/disqus",
+              "integrations/ghost-comments",
+              "integrations/cusdis",
+              "integrations/commento",
+              "integrations/telegram"
+            ]
+          },
+          {
+            "group": "Tutorials",
+            "pages": [
+              "tutorials/create-curated-page",
+              "tutorials/create-course-hub",
+              "tutorials/ai-search-cloudflare",
+              "tutorials/gallery-layout",
+              "tutorials/tracking-ga4"
+            ]
+          }
+        ]
+      }
+    ]
   }
 }

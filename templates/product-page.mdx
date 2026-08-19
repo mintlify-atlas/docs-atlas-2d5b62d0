@@ -1,0 +1,226 @@
+---
+title: "Product Page Template: Create Sales Pages on Ghost"
+sidebarTitle: "Product Page"
+description: "Turn any Ghost page into a sales page with TanaFlows. Configure pricing, feature checklist, buy links, and automatic Product SEO schema via Code Injection."
+---
+
+TanaFlows includes a dedicated **Product** page template (`product`) that converts a standard Ghost page or post into a fully featured digital product sales landing page — no third-party page builders required. The layout is split into two columns: the left side holds the product image, long-form description, and optional comments; the right side presents a sticky sidebar with pricing, a feature checklist, purchase and demo buttons, product specifications, a customer testimonial, and a creator or brand card. On mobile, the sidebar automatically repositions below the feature image so buyers can act without excessive scrolling.
+
+---
+
+## Step 1: Activate the Product Template
+
+<Steps>
+  <Step title="Create or open a Page or Post">
+    In **Ghost Admin**, go to **Pages** (recommended) or **Posts** and create a new item for your product.
+  </Step>
+  <Step title="Select the Product template">
+    Open page settings (gear icon ⚙️), find the **Template** field, and select **`Product`**.
+  </Step>
+  <Step title="Upload the feature image">
+    Upload a high-quality **Feature Image**. This image loads immediately as the product hero visual and is also used in Google Shopping schema.
+  </Step>
+  <Step title="Fill in the excerpt">
+    Enter a concise product description in the **Excerpt** field — this text appears in the right sidebar beneath the product title.
+  </Step>
+  <Step title="Write the product body">
+    Use the Ghost editor to write a detailed product description, FAQs, screenshots, or tutorials. This content appears in the left column of the layout.
+  </Step>
+</Steps>
+
+---
+
+## Step 2: Configure the Sidebar via Code Injection
+
+All right-sidebar data — price, feature list, buy link, specifications, testimonial, and creator details — is controlled by a single Alpine.js script injected through Code Injection.
+
+<Steps>
+  <Step title="Open Code Injection">
+    On the product page, open settings (gear icon ⚙️) and click **Code Injection**.
+  </Step>
+  <Step title="Paste the configuration script">
+    Copy the block below into the **Page header** field:
+
+    ```html
+    <script>
+      document.addEventListener('alpine:init', () => {
+        Alpine.data('product', () => ({
+          store: Alpine.$persist({
+
+            // ── FEATURE CHECKLIST ───────────────────
+            feature: [
+              'Multi-language support',
+              'Dark mode support',
+              'Localized language ready',
+              'Diverse pre-made templates'
+            ],
+
+            // ── PRODUCT PRICE ────────────────────────
+            price: '$99',
+
+            // ── CHECKOUT LINK (buy button) ───────────
+            button_text: 'Buy Now',
+            buyNowUrl: 'https://store.example.com/checkout/buy/sample-product-id?embed=1',
+
+            // ── PREVIEW LINK (demo button) ───────────
+            button_demo_text: 'View Demo Site',
+            liveDemoUrl: 'https://demo.example.com',
+
+            // ── DETAILED SPECIFICATIONS ──────────────
+            productInfo: [
+              { name: 'Platform', info: 'Highly customizable system' },
+              { name: 'Search',   info: 'Integrated search out of the box' },
+              { name: 'Dark Mode', info: 'Ready for other languages' },
+              { name: 'Version',  info: 'v1.0.0' },
+            ],
+
+            // ── SMALL DISCLAIMER ─────────────────────
+            note: null,
+
+            // ── CUSTOMER TESTIMONIAL ─────────────────
+            testimonial: {
+              words:   'Amazing product! It completely transformed my daily workflow.',
+              name:    'Jane Smith',
+              website: 'https://janesmith.example.com',
+              title:   'Early Adopter'
+            },
+
+            // ── CREATOR DETAILS ──────────────────────
+            author: {
+              name:           'John Doe',
+              avatar:         'https://images.example.com/avatars/john-doe.png',
+              background_img: 'https://images.example.com/banners/john-doe-cover.jpg',
+              website:        'https://johndoe.example.com',
+              twitter:        'https://x.com/johndoe_example',
+              subscribe:      'https://johndoe.example.com/#/portal/signup',
+              bio:            'Digital product creator and solopreneur passionate about helping others streamline their digital workflows.'
+            },
+
+            // ── BRAND ────────────────────────────────
+            brand: {
+              name:           'BrandName',
+              avatar:         'https://images.example.com/brands/logo.png',
+              background_img: 'https://images.example.com/brands/cover.jpg',
+              website:        'https://brand.example.com',
+              twitter:        'https://x.com/brand_example',
+              subscribe:      'https://brand.example.com/#/portal/signup',
+              bio:            'Empowering creators to turn their passion into a sustainable business.'
+            }
+
+          }).as('product_page_data').using(sessionStorage),
+
+          get feature()          { return this.store.feature },
+          get price()            { return this.store.price },
+          get button_text()      { return this.store.button_text },
+          get buyNowUrl()        { return this.store.buyNowUrl },
+          get button_demo_text() { return this.store.button_demo_text },
+          get liveDemoUrl()      { return this.store.liveDemoUrl },
+          get productInfo()      { return this.store.productInfo },
+          get testimonial()      { return this.store.testimonial },
+          get note()             { return this.store.note },
+          get author()           { return this.store.author },
+          get brand()            { return this.store.brand },
+        }));
+      });
+    </script>
+    ```
+  </Step>
+  <Step title="Customise and save">
+    Replace the placeholder values — texts, URLs, images — with your real product data. Click **Save** and refresh the page to see the result.
+  </Step>
+</Steps>
+
+<Note>
+  To allow readers to post comments or questions at the bottom of the product page, add the internal tag **`#comment`** in the page's Tags field.
+</Note>
+
+---
+
+## Optional: Video Autoplay on the Hero Image
+
+You can replace the static feature image with an autoplaying, muted video when visitors land on the page — without any impact on LCP performance.
+
+<Steps>
+  <Step title="Upload the feature image as normal">
+    The image acts as an immediate LCP poster while the video loads in the background.
+  </Step>
+  <Step title="Paste the video URL into the Feature Image Alt Text field">
+    Open post settings → scroll to **Feature Image Alt Text** → paste your video link there.
+
+    Supported formats:
+    - **YouTube:** `https://www.youtube.com/watch?v=XXXXX` or `https://youtu.be/XXXXX`
+    - **Vimeo:** `https://vimeo.com/XXXXX`
+    - **Direct MP4/WebM:** any URL ending with `.mp4` or `.webm`
+  </Step>
+</Steps>
+
+The video loads progressively — the static image appears immediately, then fades out once the video is ready. A Glassmorphism audio toggle appears in the top-right corner. Video playback automatically pauses when scrolled out of view (IntersectionObserver) and resumes when scrolled back.
+
+<Tip>
+  Search engine crawlers see the product title in the `alt` attribute — not the video URL. The Product Schema JSON-LD continues to reference the original static image for Google Shopping compatibility.
+</Tip>
+
+---
+
+## Automatic Product Schema (JSON-LD)
+
+The Product template automatically generates and injects **JSON-LD structured data** following the [schema.org/Product](https://schema.org/Product) standard. No extra tags or manual setup are needed.
+
+This schema enables Google Rich Results including:
+
+- Price displayed directly beneath the page title in search results
+- Stock status (`In Stock`)
+- Star review ratings (when a testimonial is present)
+- Merchant listings in Google Shopping
+
+### Example JSON-LD output
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Tana Digital Brain",
+  "url": "https://yoursite.com/en/product/tana-digital-brain/",
+  "sku": "tana-digital-brain",
+  "description": "Intelligent note-taking system built on top of Tana...",
+  "image": "https://yoursite.com/content/images/product.jpg",
+  "brand": {
+    "@type": "Brand",
+    "name": "TanaFlows",
+    "logo": "https://yoursite.com/logo.png",
+    "url": "https://tanaflows.com"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "99",
+    "priceCurrency": "USD",
+    "url": "https://yoursite.com/en/product/tana-digital-brain/",
+    "availability": "https://schema.org/InStock",
+    "itemCondition": "https://schema.org/NewCondition"
+  },
+  "manufacturer": {
+    "@type": "Person",
+    "name": "John Doe",
+    "image": "https://yoursite.com/avatar.jpg",
+    "url": "https://yoursite.com/author/john"
+  }
+}
+```
+
+### Schema edge cases
+
+| Scenario | Behaviour |
+|---|---|
+| `price: null` with no `author` or `brand` | Schema is still injected with `price: 0`; site title used as default brand |
+| `brand: null` | Ghost site title (`{{@site.title}}`) is used as the brand name |
+| `author: null` | The `manufacturer` field is omitted entirely |
+| Missing `feature_image` | The `image` field is omitted |
+| `price: '100% Free'` | Matched as a free-price keyword; the number `100` is ignored |
+
+### Validate your schema
+
+| Tool | Purpose |
+|---|---|
+| [Google Rich Results Test](https://search.google.com/test/rich-results) | Confirms eligibility for search Rich Results |
+| [Schema Markup Validator](https://validator.schema.org) | Validates syntax against schema.org spec |
+| Google Search Console → Enhancements → Products | Tracks indexing status after deployment |

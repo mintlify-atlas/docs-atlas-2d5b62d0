@@ -1,0 +1,117 @@
+{
+  "projectType": "saas",
+  "projectName": "TanaFlows",
+  "projectDescription": "TanaFlows is a premium Ghost CMS theme built for multilingual publishing, affiliate marketers, and SaaS creators, featuring smart search, course pages, SEO schemas, and AI-ready integrations.",
+  "theme": "willow",
+  "primaryColor": "#ffffff",
+  "lightColor": "#5555ec",
+  "darkColor": "#b6b6fb",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "introduction",
+              "installation",
+              "changelog"
+            ]
+          },
+          {
+            "group": "Features",
+            "pages": [
+              "features/smart-search",
+              "features/seo-schema",
+              "features/ai-share",
+              "features/author-biolink",
+              "features/child-search",
+              "features/syntax-highlight",
+              "features/lightbox",
+              "features/cta-banner"
+            ]
+          },
+          {
+            "group": "Page Templates",
+            "pages": [
+              "templates/home-page",
+              "templates/course-page",
+              "templates/product-page",
+              "templates/changelog-page",
+              "templates/contact-page"
+            ]
+          },
+          {
+            "group": "Multilingual",
+            "pages": [
+              "multilingual/hosting-guide",
+              "multilingual/enable-multilingual",
+              "multilingual/multilingual-articles"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Integrations",
+        "groups": [
+          {
+            "group": "Comment Systems",
+            "pages": [
+              "integrations/giscus",
+              "integrations/disqus",
+              "integrations/ghost-comments",
+              "integrations/cusdis",
+              "integrations/commento",
+              "integrations/telegram"
+            ]
+          },
+          {
+            "group": "Tutorials",
+            "pages": [
+              "tutorials/create-curated-page",
+              "tutorials/create-course-hub",
+              "tutorials/ai-search-cloudflare",
+              "tutorials/gallery-layout",
+              "tutorials/tracking-ga4"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "Multilingual Ghost CMS support with subdirectory routing",
+    "Smart Search with fuzzy matching and instant results",
+    "Smart 404 with AI-powered page suggestions",
+    "Smart Related Posts with multi-tier matching algorithm",
+    "5 built-in automated SEO schemas (Breadcrumb, Course, FAQ, Review, Product)",
+    "AI-Ready Integration Suite (Copy as Markdown, ChatGPT/Claude/Gemini one-click share)",
+    "Author Biolink page (Linktree-style personal landing page)",
+    "Course page templates supporting YouTube, Vimeo, BunnyCDN, HTML5, Alugha, Mux, Loom",
+    "Child Search (tag-scoped and full-text search via FuseJS)",
+    "9 comment system integrations (Giscus, Disqus, Ghost, Cusdis, Commento, Telegram, etc.)"
+  ],
+  "publicApiSurface": [
+    "Ghost Custom Settings: multilingual enable/disable toggle",
+    "Ghost Custom Settings: languages list (format: language_code|Display_Name)",
+    "Ghost Custom Settings: root URL configuration",
+    "Ghost Custom Settings: comment provider selection",
+    "Internal tag #multilingual — links translated posts",
+    "Internal tag #newsletter — marks newsletter posts for homepage section",
+    "Internal tag #product — marks product pages for mega menu",
+    "Internal tag #changelog — marks changelog posts",
+    "Internal tag #comment — adds comment section to any page",
+    "Internal tag #faq-schema — activates FAQ structured data",
+    "Internal tag #faq-schema-toggle — FAQ schema via Ghost toggle cards",
+    "Internal tag #no-toc — hides table of contents on specific posts",
+    "Internal tag #no-homepage — hides post from homepage",
+    "Internal tag #no-featured — hides post from featured section",
+    "Internal tag #review — activates Review schema markup",
+    "Course LMS tags: #youtube, #vimeo, #bunny, #htmlvideo, #alugha, #mux, #loom, #textcourse",
+    "Author biolink config via internal tag Description field (Title|Bio|CTA Label|CTA URL)",
+    "Author biolink links via internal tag Meta Description (Name|URL, Name|URL)",
+    "window.lessons[] JavaScript array for course page lesson list injection",
+    "Custom routes (routes.yaml) for curated page templates"
+  ]
+}

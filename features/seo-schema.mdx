@@ -1,0 +1,112 @@
+---
+title: "Automated SEO Schemas: Breadcrumb, Course, FAQ, Review, Product"
+sidebarTitle: "SEO Schemas"
+description: "Five built-in Schema.org markups — Breadcrumb, Course, FAQ, Review, and Product — auto-inject structured data to unlock Google Rich Snippets without writing JSON-LD."
+---
+
+Structured data (Schema Markup) is a critical technical SEO element that helps search engines understand page content and display **Rich Snippets** — star ratings, FAQ accordions, course details, or hierarchical breadcrumbs — directly in search results. TanaFlows ships with five built-in automated schemas, eliminating the need to write any custom JSON-LD code by hand.
+
+---
+
+## 1. Breadcrumb Schema
+
+Breadcrumb Schema tells Google the hierarchical navigation path of a page, which it can display inline in search results — for example, `Home > Blog > SEO Guide`.
+
+<Tip>
+  **Fully Automatic.** The theme injects Breadcrumb Schema on every Post, Page, Tag Page, and Author Page automatically. No tags or configuration are required. The homepage is the only page excluded.
+</Tip>
+
+**How the breadcrumb is constructed:**
+
+- Every page is linked back to the homepage as the root level.
+- For blog posts that have a public tag assigned, that tag serves as the middle category level in the breadcrumb path.
+- Internal tags (those beginning with `#`) are automatically filtered out to keep the SEO breadcrumb path clean.
+
+---
+
+## 2. Course Schema
+
+Course Schema surfaces full course details — course name, instructor, and description — directly on Google search result pages.
+
+<Info>
+  **How to activate:** Course Schema is automatically applied to any **Page** that carries one of the following internal LMS tags: `#vimeo`, `#youtube`, `#bunny`, `#alugha`, `#htmlvideo`, `#mux`, `#loom`, or `#textcourse`.
+</Info>
+
+**Automated data extraction rules:**
+
+| Schema Field | Source in Ghost |
+|---|---|
+| Course Name | Page Title |
+| Description | Page SEO Description |
+| Image | Page Feature Image |
+| Instructor (Creator) | Page Authors list |
+| Topics Taught (Teaches) | First 3 public tags on the page |
+| Pricing | Declared as Free ($0 USD) if the page is publicly visible |
+
+---
+
+## 3. FAQ Schema
+
+FAQ Schema renders a dropdown accordion of questions and answers directly beneath your search listing on Google, significantly increasing click-through rates.
+
+<Info>
+  **How to activate:** Assign the internal tag **`#faq-schema`** to the post or page. The tag must begin with `#`.
+</Info>
+
+**Content formatting rules for auto-detection:**
+
+Write your content in the Ghost Editor using one of two supported methods:
+
+- **Method 1 — Headings:** Create an H2 or H3 heading that ends with a question mark `?` (e.g., `How do I sign up?`). The content block immediately following that heading is automatically used as the answer.
+- **Method 2 — Toggle Cards:** Insert standard Toggle cards in the Ghost Editor. The toggle header becomes the question and the toggle body becomes the answer.
+
+The system automatically strips all HTML tags from questions and answers before sending the data to Google, ensuring clean plain text that complies with Google's quality guidelines and avoids spam flags.
+
+---
+
+## 4. Review Schema
+
+Review Schema enables product review pages to show average star ratings and product details directly in Google search results.
+
+<Info>
+  **How to activate:** Assign the internal tag **`#review`** to the post or page. The tag must begin with `#`.
+</Info>
+
+**Content formatting rules for auto-detection:**
+
+Use the default **Product Card** in the Ghost Editor to showcase each product being reviewed. The theme automatically scans those Product Cards and extracts:
+
+- **Product Name:** The title of the Product Card.
+- **Description & Image:** The description text and image from the Product Card.
+- **Checkout URL:** The button link on the Product Card (falls back to the current page URL if no button link is set).
+- **Star Rating:** If star ratings are enabled on the Product Card, the system counts and calculates the average rating out of 5 stars.
+
+---
+
+## 5. Product Schema
+
+Product Schema is designed for sales landing pages and displays pricing, stock availability, brand details, and creator information directly on Google.
+
+<Tip>
+  **Fully Automatic.** Product Schema activates automatically on any page using the dedicated product layout template. No internal tags are required.
+</Tip>
+
+For detailed instructions on configuring product pricing, manufacturer, and brand details using the Alpine script, see the Product Page template guide.
+
+---
+
+## Verifying Schemas After Publishing
+
+Once you publish a post or page with any of these schemas configured, use Google's Rich Results Test to confirm the markup is detected correctly.
+
+<Steps>
+  <Step title="Open the Rich Results Test">
+    Go to [Google Rich Results Test](https://search.google.com/test/rich-results) in your browser.
+  </Step>
+  <Step title="Enter your page URL">
+    Paste the full URL of your published post or page and run the test.
+  </Step>
+  <Step title="Review detected schemas">
+    The tool lists all successfully detected schemas — for example, *Breadcrumbs*, *FAQ*, *Course*, or *Product* — along with any warnings or errors to address.
+  </Step>
+</Steps>

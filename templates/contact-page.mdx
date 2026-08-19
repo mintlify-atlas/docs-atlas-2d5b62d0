@@ -1,0 +1,89 @@
+---
+title: "Contact Page Template: Build Forms in Ghost with TanaFlows"
+sidebarTitle: "Contact Page"
+description: "Add a Formspark contact form to your Ghost site with TanaFlows. Covers page setup, form creation, anti-bot spam protection, and managing replies via email."
+---
+
+TanaFlows includes a ready-made **Contact** page template that wires a spam-protected contact form into your Ghost site without requiring any custom code. The form is powered by [Formspark](https://formspark.io/) — a lightweight form-backend service with a free tier — and is activated by creating a Ghost page with the slug `contact` and pasting your Formspark action URL into Ghost's Design settings. Visitors receive a clean, on-brand form; you receive email notifications with a **Reply-to** header set to the sender's address so you can respond directly from your inbox.
+
+---
+
+## Step 1: Create the Contact Page in Ghost Admin
+
+<Steps>
+  <Step title="Create a new Page">
+    Go to **Ghost Admin → Pages → New Page**.
+  </Step>
+  <Step title="Configure the page settings">
+    Open page settings (gear icon ⚙️) and set:
+    - **Page URL (Slug):** `contact` — this exact slug activates the contact template.
+    - **Template:** `Default` (the TanaFlows theme detects the `contact` slug automatically).
+    - **Title:** optional — you can leave it blank or use a headline such as *Get in Touch*.
+  </Step>
+  <Step title="Add page content">
+    Write a brief description in the page body. This text appears above the form and sets expectations for visitors (response time, what to include in a message, etc.).
+  </Step>
+  <Step title="Publish the page">
+    Click **Publish**.
+  </Step>
+</Steps>
+
+---
+
+## Step 2: Create a Formspark Form
+
+Formspark provides the form submission endpoint and handles spam filtering, email notifications, and reply routing.
+
+<Steps>
+  <Step title="Register a free account">
+    Go to [formspark.io](https://formspark.io/pricing/) and sign up for a free account.
+  </Step>
+  <Step title="Create a new form">
+    In the Formspark dashboard, click **New form**. Give it a recognisable name such as `TanaFlows Contact`.
+  </Step>
+  <Step title="Copy the form action URL">
+    After creation, Formspark displays your unique form action URL:
+
+    ```html
+    https://submit-form.com/9syxxxx
+    ```
+
+    Copy this URL — you will paste it into Ghost in the next step.
+  </Step>
+</Steps>
+
+---
+
+## Step 3: Connect the Form to Ghost
+
+<Steps>
+  <Step title="Open Ghost Design settings">
+    In Ghost Admin, go to **Settings → Design → Site-wide**.
+  </Step>
+  <Step title="Paste the form action URL">
+    Find the **Contact form** field and paste your Formspark action URL (e.g. `https://submit-form.com/9syxxxx`).
+  </Step>
+  <Step title="Save">
+    Click **Save**. The contact form at `yourdomain.com/contact/` is now live and submissions will route to your Formspark account.
+  </Step>
+</Steps>
+
+---
+
+## Managing Contact Messages
+
+Formspark sends an email notification to your registered address each time the form is submitted. The email's **Reply-to** header is automatically set to the sender's email address, so you can reply directly from your mail client without copying addresses manually.
+
+<Note>
+  To configure where notification emails are delivered, open the Formspark dashboard, select your form, and update the **Notification email** under form settings. You can also enable integrations with Slack, Zapier, or webhooks for more advanced workflows.
+</Note>
+
+---
+
+## Anti-Bot Protection
+
+Formspark includes built-in **Botpoison** anti-spam protection at no extra cost. This invisible challenge verifies that submissions come from real humans before they reach your inbox — no CAPTCHA images or puzzles are shown to legitimate visitors.
+
+<Tip>
+  If you use Formspark's free plan, keep an eye on your monthly submission quota. Upgrading to a paid plan removes submission limits and unlocks additional integrations such as custom redirect URLs and file uploads.
+</Tip>

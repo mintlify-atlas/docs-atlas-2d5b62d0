@@ -1,0 +1,131 @@
+---
+title: "Add AI-Powered Search to Ghost with Cloudflare Workers"
+sidebarTitle: "AI Search"
+description: "Deploy AI-powered semantic search for your Ghost blog using Cloudflare Workers and TanaFlows. Step-by-step setup from Workers KV to theme configuration."
+---
+
+TanaFlows ships with full out-of-the-box support for **Cloudflare AI Search** — a next-generation search solution that combines semantic search with a conversational AI assistant. Unlike traditional keyword search (which requires exact character matches), semantic search understands the *intent* behind a query and surfaces the most relevant results even when the exact wording differs. Paired with the **Ask AI** drawer, your readers can ask natural-language questions and receive direct, source-linked answers drawn from your own published content.
+
+## What Cloudflare AI Search Adds to TanaFlows
+
+Once enabled, two new interactive features appear on your site automatically:
+
+<CardGroup cols={2}>
+  <Card title="Semantic Search Modal" icon="magnifying-glass">
+    Clicking the search icon in the header or on 404 pages opens a modern search popup. Readers type natural questions and receive results ranked by meaning, not just keyword overlap.
+  </Card>
+  <Card title="Ask AI Drawer" icon="robot">
+    An **Ask AI** button appears in the header. Clicking it slides a conversational chat panel in from the right. The panel uses your indexed articles as the LLM context source — every answer links back to your own content.
+  </Card>
+</CardGroup>
+
+TanaFlows also integrates AI Search in two more places automatically:
+
+- **404 pages** — relevant articles are suggested based on the broken URL slug/keyword
+- **Related Posts** — the bottom of each post shows semantically related content rather than posts that simply share a tag
+
+Both components respect the site's dark/light mode setting without any extra configuration.
+
+---
+
+## Setup Overview
+
+The integration requires three stages:
+
+1. Create and configure a Cloudflare AI Search instance
+2. Enable the public endpoint and copy the API URL
+3. Activate AI Search inside Ghost Admin
+
+<Steps>
+
+  ### Create and Configure the Cloudflare Instance
+
+  1. Log in to your **Cloudflare Dashboard**.
+  2. In the left navigation, go to **AI Search → Instances**.
+  3. Click **Create Instance** and give your search engine a name.
+  4. Under **Data Sources**, add your Ghost sitemap URL:
+     ```text
+     https://your-domain.com/sitemap.xml
+     ```
+  5. Click **Run Crawl / Index** to let Cloudflare fetch and index your articles.
+
+  <Info>
+    Ghost generates a sitemap at `/sitemap.xml` automatically. Cloudflare will crawl it and index all public posts and pages. Re-run the crawl whenever you publish significant new content to keep the index fresh.
+  </Info>
+
+  ### Activate the Public Endpoint and Set Permissions
+
+  The TanaFlows theme calls the Cloudflare API directly from the browser. To allow this without authentication errors, you must enable the public endpoint.
+
+  1. Open your AI Search Instance and go to the **Settings** tab → **Public Endpoint**.
+  2. Toggle **Enable Public Endpoint** to on.
+  3. Under **Endpoint Permissions**, check **both** of the following:
+     - ✅ **Enable Search** — allows keyword and semantic search queries
+     - ✅ **Enable Chat / Chat Completions** — allows the Ask AI conversational drawer
+  4. Under **Chat settings**, select an LLM model. Cloudflare recommends instruct-tuned models such as:
+     ```text
+     @cf/meta/llama-3-8b-instruct
+     ```
+  5. Under **Allowed Origins (CORS)**, add your production domain:
+     ```text
+     https://your-domain.com
+     ```
+     For local development, also add:
+     ```text
+     http://localhost:2368
+     http://127.0.0.1:2368
+     ```
+
+  <Warning>
+    If you do not add your production domain to **Allowed Origins**, the browser will block all requests to the Cloudflare endpoint and search will silently fail. Using `*` works for quick tests but is not recommended for production.
+  </Warning>
+
+  ### Retrieve the Public Endpoint URL
+
+  After saving the Public Endpoint configuration, Cloudflare displays a public API URL in the format:
+
+  ```text
+  https://a36c95f2-f156-4d52-bd1b-aa5ead5841d3.search.ai.cloudflare.com/search
+  ```
+
+  Copy this entire URL — including the `/search` path at the end. You will paste it into Ghost Admin in the next step.
+
+  ### Activate AI Search in Ghost Admin
+
+  1. Log in to **Ghost Admin → Settings → Design → Site design**.
+  2. Find the **TanaFlows** theme customisation section.
+  3. In the **Custom Search** setting, switch the option from `Native Search` to **`AI Search by Cloudflare`**.
+  4. In the **Search Endpoint URL** field, paste the full API URL you copied in Step 3.
+  5. Click **Save** in the top-right corner.
+
+  The search system switches to Cloudflare AI immediately. The **Ask AI** button will appear in your site header on the next page load.
+
+</Steps>
+
+---
+
+## Troubleshooting
+
+<Warning>
+  **HTTP 400 Bad Request on the second message in Ask AI**
+
+  This error typically means the Cloudflare LLM cannot process the chat history array during query rewriting.
+
+  **Fix:** Confirm that you have selected a correct **instruct** model (such as `@cf/meta/llama-3-8b-instruct`) in the Cloudflare Public Endpoint chat settings — do not use a base completion model.
+
+  **Quick Reset:** Click the **New Chat** button (plus or trash icon) inside the Ask AI drawer to clear the broken session cache from `localStorage`.
+</Warning>
+
+<Note>
+  **Testing on localhost**
+
+  When testing on `http://127.0.0.1:2368`, some Cloudflare security policies may block API requests over unencrypted HTTP. For reliable testing, deploy to a live staging site configured with **HTTPS**.
+</Note>
+
+---
+
+## How the Ask AI Drawer Behaves
+
+- Chat history is **collapsed by default on desktop** to keep the interface minimal; it expands as the conversation grows.
+- Each AI response includes source links drawn from your indexed articles — readers can verify answers and navigate to the relevant posts.
+- Clearing the chat (New Chat button) wipes the session from `localStorage` and starts a fresh conversation context.

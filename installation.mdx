@@ -1,0 +1,99 @@
+---
+title: "Install TanaFlows on Your Ghost Site"
+sidebarTitle: "Installation"
+description: "Step-by-step guide to uploading and activating the TanaFlows Ghost theme. From download to live site in under five minutes."
+---
+
+Installing TanaFlows follows the standard Ghost theme upload process — no command line, no build step, no server access required for end users. You download the theme as a zip file from your purchase portal, upload it directly inside Ghost Admin, and activate it. The entire process takes under five minutes. This page walks through every step, covers the post-installation settings worth configuring right away, and includes the local development commands for anyone who wants to run the Astro-based docs site.
+
+<Note>
+  TanaFlows is distributed as a **zip file**. Do not unzip it before uploading — Ghost expects the compressed archive. Download it from your [Lemon Squeezy orders portal](https://app.lemonsqueezy.com/my-orders/) after purchase.
+</Note>
+
+## Uploading and Activating the Theme
+
+<Steps>
+  <Step title="Open Theme Settings in Ghost Admin">
+    Log in to your Ghost Admin panel. In the left sidebar, navigate to **Settings** → **Design** → **Change theme**.
+  </Step>
+  <Step title="Access the Upload Panel">
+    On the theme selection screen, click **Advanced** in the upper-right corner to reveal the upload controls.
+
+    Then click **Upload theme** to open the file picker, or drag and drop the TanaFlows zip file directly onto the upload target.
+  </Step>
+  <Step title="Upload the Zip File">
+    Select the `tanaflows-x.x.x.zip` file you downloaded from your purchase portal. Ghost will validate the package and display a success message once the upload is complete.
+  </Step>
+  <Step title="Activate TanaFlows">
+    After the upload finishes, click **Activate** to make TanaFlows the active theme on your site. Your site will immediately begin using the new theme.
+  </Step>
+</Steps>
+
+<Info>
+  If Ghost shows any warnings during upload (such as unused template files), these are informational only and will not affect functionality. Click **Activate** to proceed.
+</Info>
+
+## Post-Installation Configuration
+
+Once TanaFlows is active, a few settings in Ghost Admin are worth configuring before you start publishing.
+
+### Ghost Custom Settings
+
+TanaFlows exposes its key options through Ghost's built-in **Design → Customize** panel. The most important settings to review on a fresh install are:
+
+- **Search provider** — Choose between Ghost's native search and TanaFlows' Smart Search (typo-tolerant, `Ctrl/Cmd + K` shortcut, language-scoped). Smart Search is recommended for most sites.
+- **Multilingual configuration** — If you are running a multi-language site, enter the root URL of your primary Ghost instance and set the supported language codes. This powers the language switcher, `hreflang` tags, and scoped search results. See the [Multilingual Hosting Guide](/multilingual/hosting-guide) for full setup instructions.
+- **Homepage layout** — Choose which sections appear on your homepage and in what order. All homepage blocks can be toggled and rearranged without code.
+- **Footer signature** — Optionally replace or hide the default copyright line to match your own brand.
+
+### Selecting a Comment Provider
+
+TanaFlows supports multiple comment platforms. Navigate to **Settings → Design → Customize** and select your preferred provider:
+
+| Provider | Notes |
+|---|---|
+| Ghost Comments (default) | Built-in, no extra setup needed |
+| Giscus | GitHub Discussions-based; supports dark mode and multiple languages |
+| Disqus | Loads lazily via IntersectionObserver for performance |
+| FastComments | Eighth supported platform; self-hostable option available |
+| FluentCommunity | Full community features: nested replies, hover cards, Markdown copy |
+| Bluesky | Social commenting with automatic profile verification |
+
+<Warning>
+  If you enable a third-party comment provider, make sure to enter the required credentials (repository ID, site shortname, etc.) in the corresponding Custom Settings fields. Leaving them blank will result in comments not loading.
+</Warning>
+
+## Developer Setup: Running the Docs Site Locally
+
+The TanaFlows documentation site is built with Astro v5 and Tailwind CSS v4. If you want to run it locally — for example, to contribute to docs or preview changes — use the following commands from the project root:
+
+| Command | Action |
+|---|---|
+| `npm install` | Installs all project dependencies |
+| `npm run dev` | Starts the local dev server at `localhost:4321` |
+| `npm run build` | Builds the production site to `./dist/` |
+| `npm run preview` | Previews the production build locally before deploying |
+
+```bash
+# First-time setup
+npm install
+
+# Copy Pagefind search index for the dev environment
+# On macOS / Linux:
+npm run osxsearch
+# On Windows:
+npm run winsearch
+
+# Start the dev server
+npm run dev
+```
+
+<Tip>
+  After running `npm install`, you must copy the Pagefind build before the dev environment search will work. Run `npm run osxsearch` on macOS/Linux or `npm run winsearch` on Windows as shown above.
+</Tip>
+
+## Updating TanaFlows
+
+When a new version of TanaFlows is released, the update process is identical to the initial install: download the new zip from your Lemon Squeezy portal, upload it via **Settings → Design → Change theme → Advanced → Upload theme**, and activate it. Ghost preserves your Custom Settings across theme updates.
+
+Check the [Changelog](/changelog) before upgrading to review breaking changes or new configuration options introduced in the latest release.

@@ -1,0 +1,113 @@
+---
+title: "Author Biolink Page: Linktree-Style Profile for Ghost Authors"
+sidebarTitle: "Author Biolink"
+description: "Turn any Ghost author profile into a Linktree-style landing page with a hero section, custom biolink buttons, and social icons — configured entirely from Ghost Admin."
+---
+
+The Author Profile Page in TanaFlows goes well beyond a plain list of posts. A built-in **Author Biolink** feature transforms each author page into a professional personal landing page — similar to Linktree — complete with a hero section, social icons, and a vertical stack of custom link buttons. Everything is configured directly from Ghost Admin using internal tags, with no code changes required.
+
+The biolink page includes:
+
+- **Hero Section:** Author avatar, title, bio introduction, and a prominent call-to-action (Hero CTA) button.
+- **Social Icons:** Facebook, X (Twitter), and personal website icons, sourced automatically from Ghost Staff settings.
+- **Link List (Biolinks):** A vertical stack of custom link buttons pointing to any destination — freebies, communities, product pages, and more.
+
+---
+
+## Step 1: Create an Internal Tag for the Author
+
+Ghost does not natively support custom metadata fields for individual staff members. TanaFlows solves this by using an **Internal Tag** as a configuration container for each author.
+
+<Warning>
+  The internal tag name (slug) **must exactly match the author's slug**. You can verify an author's slug by checking their profile URL — for example, `domain.com/author/cuongthach/` means the slug is `cuongthach`. A mismatch will prevent the biolink configuration from loading.
+</Warning>
+
+<Steps>
+  <Step title="Open the Internal Tags tab">
+    Go to **Ghost Admin > Tags**, then select the **Internal tags** tab at the top of the page.
+  </Step>
+  <Step title="Create a matching internal tag">
+    Create a new internal tag whose name (slug) matches the author slug exactly, prefixed with `#`. For example, if the author slug is `cuongthach`, create the internal tag **`#cuongthach`**. Ghost will automatically set its system slug to `hash-cuongthach`.
+  </Step>
+  <Step title="Assign the tag to at least one post">
+    Assign this internal tag to at least one public post written by the author. This is a technical requirement for Ghost to read and synchronize the tag's metadata on the author profile page.
+  </Step>
+</Steps>
+
+---
+
+## Step 2: Configure Title, Bio, and Hero CTA Button
+
+Enter the hero section content in the **Description** field of the internal tag created in Step 1.
+
+**Format:**
+
+```
+Main Title | Short Bio | CTA Button Label | CTA Button URL
+```
+
+Separate each section with a vertical bar `|`.
+
+**Example:**
+
+```
+Hi, I am Cường Thạch! | Sharing insights on building Tana digital brain systems. | JOIN THE 30-DAY CHALLENGE | https://tanaflows.com/challenge-30-days
+```
+
+This renders as:
+
+- **Main Title:** Hi, I am Cường Thạch!
+- **Short Bio:** Sharing insights on building Tana digital brain systems.
+- **Hero CTA Button:** JOIN THE 30-DAY CHALLENGE → links to the challenge signup page.
+
+---
+
+## Step 3: Configure Link Buttons (Biolinks)
+
+The vertical link list is configured in the **Meta Description** field inside the SEO settings of the internal tag. Click the **Metadata** section of the tag configuration to access this field.
+
+**Format:**
+
+```
+Button 1 Name|Button 1 URL, Button 2 Name|Button 2 URL, Button 3 Name|Button 3 URL
+```
+
+Separate the name and URL of each button with a vertical bar `|`. Separate each button from the next with a comma `,`.
+
+**Example:**
+
+```
+Get Free Notion Templates|https://tanaflows.com/notion-free, Join Facebook Group|https://facebook.com/groups/tanaflows, Buy Second Brain Book|https://tanaflows.com/book
+```
+
+This renders as three sleek, vertically stacked buttons pointing to their respective destinations on the author page.
+
+---
+
+## Step 4: Add Social Links
+
+Social media icons (Facebook, X, and personal website) appear automatically beneath the author's profile picture when the corresponding fields are populated in Ghost Staff settings.
+
+<Steps>
+  <Step title="Open the author's Staff account">
+    Go to **Ghost Admin > Staff** and select the account for the author (e.g., `cuongthach`).
+  </Step>
+  <Step title="Fill in social URLs">
+    Enter the author's Facebook, Twitter (X), and/or personal website URL into Ghost's default social fields.
+  </Step>
+  <Step title="Save changes">
+    Click **Save**. The icons will appear on the author's biolink page immediately.
+  </Step>
+</Steps>
+
+---
+
+## Fallback and Sync Behavior
+
+<Info>
+  **Fallback Display:** If an author does not have a configured internal tag, TanaFlows automatically falls back to showing the author's Name and default Bio from their Ghost Staff settings. The page will never appear broken or empty.
+</Info>
+
+<Info>
+  **Synchronization:** After updating the internal tag fields and saving, refresh the author page in your browser to see the updated layout. Changes take effect immediately without needing to reinstall the theme.
+</Info>

@@ -1,0 +1,185 @@
+---
+title: "Create a Curated Tag Page with Child Search in Ghost"
+sidebarTitle: "Curated Pages"
+description: "Build a curated content page in Ghost using TanaFlows. Add tag-scoped child search, custom routes, and monetization-ready layouts in four steps."
+---
+
+Curated pages are one of the most powerful tools in TanaFlows for content creators who want to organise articles by topic, drive targeted traffic, and open monetization opportunities. By collecting all posts that share a given internal tag into a single, beautifully templated URL, you create a permanent destination that improves SEO, increases engagement, and makes affiliate or sponsored-content placement far more effective. You can create unlimited curated pages — each with its own scoped child search — by following the four steps below.
+
+<Note>
+  Check out the [live demo curated page](https://tanaflows.bepublish.com/tools/) to see child search and the `grid-layout` template in action before you start.
+</Note>
+
+## Why Curated Pages Work
+
+**Curated pages** prove to be a strategic asset for those looking to monetize their digital presence. These specially crafted pages offer targeted monetization by aligning content with audience interests, ensuring increased engagement and interaction. By strategically promoting products, services, or affiliate links, curated pages become a focal point for generating income. Their impact also extends to **improved SEO**, **increased traffic**, and **potential ad revenue**, making them an indispensable tool for anyone seeking to earn from their content.
+
+<Steps>
+
+  ### Design a Custom Route
+
+  The first step is to create a custom route that controls the URL and the template used for curated content.
+
+  Download the default `routes.yaml` file from **Ghost Admin → Settings → Labs → Routes**, then open it in any text editor. The out-of-the-box file looks like this:
+
+  ```yaml title="routes.yaml — Ghost default"
+  routes:
+
+  collections:
+    /:
+      permalink: /{slug}/
+      template: index
+
+  taxonomies:
+    tag: /tag/{slug}/
+    author: /author/{slug}/
+  ```
+
+  To create a **Tools Page** at the URL `/tools/`, extend the file with a new collection block. Notice the `filter: tag:-[hash-tools]` added to the root collection — this prevents `#tools` posts from also appearing on your homepage.
+
+  ```yaml title="routes.yaml — custom curated page example"
+  routes:
+
+  collections:
+    /:
+      permalink: /{slug}/
+      filter: tag:-[hash-tools]
+      template: index
+    /tools/:
+      permalink: /{slug}/
+      template: grid-layout
+      order: featured desc, published_at desc
+      filter: tag:[hash-tools]
+      data: page.tools
+
+  taxonomies:
+    tag: /tag/{slug}/
+    author: /author/{slug}/
+  ```
+
+  What each key does for the `/tools/` collection:
+
+  | Key | Purpose |
+  |---|---|
+  | `template: grid-layout` | Uses TanaFlows' grid layout template (TanaFlows-exclusive) |
+  | `order: featured desc, published_at desc` | Pinned/featured posts appear first |
+  | `filter: tag:[hash-tools]` | Only posts tagged `#tools` appear here |
+  | `data: page.tools` | Pulls SEO meta and page content from the Ghost page with URL `/tools/` |
+
+  Once you have edited the file, re-upload it at **Settings → Labs → Routes**.
+
+  <Tip>
+    Repeat this pattern for as many curated pages as you need. Each page only needs a unique URL path, internal tag, and matching Ghost page slug.
+  </Tip>
+
+  ### Create the Curated Page
+
+  After saving the route, create a matching Ghost **Page** that supplies the SEO metadata and houses the child-search script.
+
+  Go to **Ghost Admin → Pages → New Page** and fill in:
+
+  - **URL (slug):** `tools` — must match the slug referenced in `data: page.tools` above
+  - **Title:** Whatever describes the curated collection (e.g., *Best AI Tools*)
+  - **Excerpt:** A short description used as the page's meta description in search results
+  - **Feature image:** Used as the Open Graph image for social sharing
+  - **Content:** An HTML block containing the child-search script from Step 3 (leave everything else blank)
+
+  <Note>
+    The page slug is required. If it does not match the `data:` key in `routes.yaml`, Ghost will not attach your SEO metadata to the collection URL.
+  </Note>
+
+  ### Configure the Child Search Injection
+
+  TanaFlows' child search lets visitors search **within** the tag scope of the current curated page — not across your entire site. This requires a small JavaScript snippet pasted into an **HTML block** inside your Ghost page.
+
+  The base template is:
+
+  ```js title="Child Search — base script"
+  <script type="module">
+    import { initSearch } from '/assets/js/search.js';
+
+    initSearch('[SITE URL]', '[CONTENT API KEY]', '[TAGS]')
+      .then((fuse) => {
+        window.fuseSearch = fuse;
+      })
+      .catch(console.error);
+  </script>
+  ```
+
+  Replace the three placeholders:
+
+  | Placeholder | What to enter |
+  |---|---|
+  | `[SITE URL]` | Your domain without a trailing slash, e.g. `https://yourdomain.com` |
+  | `[CONTENT API KEY]` | A Ghost Content API key — create one at **Settings → Integrations → Custom → Add new** |
+  | `[TAGS]` | The internal tag slug(s) to scope the search to, e.g. `hash-tools` |
+
+  **Single-tag example:**
+
+  ```js title="Child Search — single tag"
+  <script type="module">
+    import { initSearch } from '/assets/js/search.js';
+
+    initSearch('https://tanaflows.bepublish.com', '9qb9f93teb415jfa5d314ef3b5', 'hash-tools')
+      .then((fuse) => {
+        window.fuseSearch = fuse;
+      })
+      .catch(console.error);
+  </script>
+  ```
+
+  **Multi-tag example** (useful for multilingual sites or combined topics):
+
+  ```js title="Child Search — multiple tags"
+  <script type="module">
+    import { initSearch } from '/assets/js/search.js';
+
+    initSearch('https://tanaflows.bepublish.com', '9qb9f93teb415jfa5d314ef3b5', 'hash-tools, hash-ai')
+      .then((fuse) => {
+        window.fuseSearch = fuse;
+      })
+      .catch(console.error);
+  </script>
+  ```
+
+  Paste the completed script into an **HTML block** in the Ghost editor, then publish the page.
+
+  <Info>
+    Child search indexes **title**, **excerpt**, and full **content** of every post in the tag scope — not just titles. Visitors can find posts by any phrase that appears in the body of an article.
+  </Info>
+
+  ### Publish Curated Posts
+
+  With the route live and the page published, you can now populate the curated collection. Any post assigned the `#tools` internal tag will automatically appear at `/tools/`, sorted by your configured `order` rule.
+
+  When creating posts for the collection:
+
+  - Assign the internal tag `#tools` in the post settings sidebar
+  - Mark important posts as **Featured** to pin them to the top of the grid
+  - Add the tag `#no-homepage` to hide a post from the main blog feed while it still appears on the curated page
+  - Add the tag `#no-featured` to prevent a post from being included in featured post slots elsewhere on the site
+
+  <Tip>
+    Use `#no-homepage` together with `filter: tag:-[hash-tools]` on your root collection so curated posts are **only** discoverable via the curated page and search — keeping your homepage focused on editorial content.
+  </Tip>
+
+</Steps>
+
+## How Child Search Ranks Results
+
+Search results returned by `initSearch` are prioritised in this order:
+
+1. **Title** — exact and near matches rank highest
+2. **Excerpt** — the post summary is the second signal
+3. **Content** — the full article body is also indexed
+
+This means even a post that only mentions a term once deep in the article body can surface through child search, giving visitors a genuinely thorough discovery experience.
+
+## SEO Benefits of Curated Pages
+
+Curated pages function as **topic hubs** — a well-established SEO strategy where a single authoritative page links to (and collects) all related posts. Benefits include:
+
+- **Higher topical authority** — search engines see a clear cluster of content around a single subject
+- **Improved internal linking** — every curated post implicitly links back to the hub URL through the collection structure
+- **Rich meta from Ghost pages** — because the collection inherits its SEO meta from the bound Ghost page, you fully control the title tag, meta description, and Open Graph image
+- **Reduced bounce rate** — scoped child search keeps visitors on the curated page exploring content rather than leaving to use an external search engine

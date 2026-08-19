@@ -1,0 +1,85 @@
+---
+title: "TanaFlows: Ghost CMS theme for creators and marketers"
+sidebarTitle: "Introduction"
+description: "TanaFlows is a premium Ghost CMS theme with multilingual support, smart search, SEO schemas, and course pages. Learn what's included and how to navigate the docs."
+---
+
+TanaFlows is a premium Ghost CMS theme built for one purpose: to give multilingual publishers, affiliate marketers, and SaaS creators a fast, flexible, and fully featured foundation for their sites. Unlike generic themes designed to please everyone, TanaFlows is opinionated in the best way — it ships with built-in multilingual architecture, smart typo-tolerant search, structured SEO schemas, affiliate-ready landing pages, course LMS templates, and a homepage you can build entirely from Ghost Admin without touching a line of code. Every feature exists because it was needed on a real site, maintained and improved continuously.
+
+## Why TanaFlows?
+
+TanaFlows stands apart from the crowd of Ghost themes for four concrete reasons drawn from real, daily use.
+
+**One theme, lifetime updates.** TanaFlows powers the author's own sites — [bePublish](https://bepublish.com) and BrainNode OS — which means it gets updated whenever Ghost evolves, whenever a bug surfaces, and whenever a better approach is found. This is not a theme store product left to age; it is a living project with a transparent [changelog](/changelog) to prove it.
+
+**The only Ghost theme with true multilingual support.** Ghost was not designed for multi-language publishing, but TanaFlows was. It supports separate Ghost instances on the same server, proper `hreflang` tags, language-scoped search results, and a header language switcher. Spanish, French, Japanese, Chinese, Vietnamese, and German are all supported out of the box.
+
+**Built for affiliate marketers and SaaS creators.** TanaFlows includes a product page template, curated recommendation pages structured for affiliate links, a sponsored section, guest post forms, and SEO schemas (FAQ, Article, ProfilePage) that help both traditional search engines and AI tools like ChatGPT and Perplexity surface your content. No coding required to use any of it.
+
+**Performance that does not compromise features.** Alpine.js has been fully removed in v2.0.2 and replaced with lightweight Web Components. Build times dropped 60%. Images, videos, and heavy scripts load only when needed. Zero security vulnerabilities as of the latest release.
+
+<Note>
+  Setting up a multi-language site requires **two separate Ghost instances** running on the same server — one per language. A single Ghost instance supports one language only. See the [Multilingual Hosting Guide](/multilingual/hosting-guide) for the full setup walkthrough.
+</Note>
+
+## Quick Navigation
+
+<CardGroup cols={2}>
+  <Card title="Installation" icon="download" href="/installation">
+    Upload the theme zip, activate it in Ghost Admin, and be live in under five minutes.
+  </Card>
+  <Card title="Smart Search" icon="magnifying-glass" href="/features/smart-search">
+    Typo-tolerant, language-scoped search with a `Ctrl/Cmd + K` global modal and smart 404 suggestions.
+  </Card>
+  <Card title="Multilingual Hosting Guide" icon="globe" href="/multilingual/hosting-guide">
+    Step-by-step instructions for running two Ghost instances on one server for multi-language publishing.
+  </Card>
+  <Card title="Create a Curated Page" icon="list-check" href="/tutorials/create-curated-page">
+    Build an affiliate-ready recommendation page using the curated page template — no code needed.
+  </Card>
+</CardGroup>
+
+## Internal Tags Reference
+
+TanaFlows uses Ghost internal tags (prefixed with `#`) to activate special layout templates, schema features, and display rules. Assign these tags to any post or page inside Ghost Admin to unlock the corresponding behavior.
+
+| Internal Tag | What It Does |
+|---|---|
+| `#newsletter` | Marks the post as a newsletter post and displays it in the newsletter section on the homepage |
+| `#multilingual` | Marks a post or page as having a translated version (for the Multilingual feature only) |
+| `#product` | Marks the page as a single product page and adds it to the mega menu navigation and footer menu |
+| `#changelog` | Marks posts as changelog entries and adds them to the changelog page |
+| `#comment` | Adds a comment section to any page |
+| `#faq-schema` | Injects FAQ structured data (JSON-LD) into any FAQ post or page |
+| `#faq-schema-toggle` | Injects FAQ structured data into any post or page that uses Ghost toggle cards |
+| `#no-toc` | Hides the table of contents on a specific post |
+| `#guest-post` | Marks the page as the guest post submission form |
+| `#no-homepage` | Hides the post or page from all homepage sections |
+| `#no-featured` | Hides the post or page from the featured posts section |
+
+### Course LMS Tags
+
+Course tags tell TanaFlows which video platform to use for a given course page. Each course page should have exactly one of these tags applied.
+
+| Course Tag | Video Platform |
+|---|---|
+| `#youtube` | Embeds YouTube for all lesson videos on the course page |
+| `#vimeo` | Embeds Vimeo for all lesson videos on the course page |
+| `#bunny` | Embeds BunnyCDN for all lesson videos on the course page |
+| `#htmlvideo` | Uses the native HTML5 video player for all lesson videos |
+| `#alugha` | Embeds Alugha for all lesson videos on the course page |
+| `#mux` | Embeds Mux Player for all lesson videos (same infrastructure as Skool) |
+| `#loom` | Embeds Loom for all lesson videos with titles and tips auto-hidden |
+
+## Where to Start
+
+If this is your first time with TanaFlows, the recommended reading order is:
+
+1. **[Installation](/installation)** — Get the theme uploaded and activated on your Ghost site.
+2. **[Changelog](/changelog)** — Check what's new in the latest release before diving into features.
+3. **[Multilingual Hosting Guide](/multilingual/hosting-guide)** — Essential if you are running or planning a multi-language site.
+4. **[Create a Curated Page](/tutorials/create-curated-page)** — A practical tutorial showing real-world monetization with TanaFlows templates.
+
+<Tip>
+  Both [bepublish.com](https://bepublish.com) and [tanaflows.bepublish.com](https://tanaflows.bepublish.com) run TanaFlows with live updates applied, so you can always use them as a working reference for any feature described in these docs.
+</Tip>

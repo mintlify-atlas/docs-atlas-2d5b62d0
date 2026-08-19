@@ -1,0 +1,136 @@
+---
+title: "Host a Multilingual Ghost Site with Subdirectory Routing"
+sidebarTitle: "Hosting Guide"
+description: "Deploy two Ghost instances on one server to support multiple languages with subdirectory URLs like /vi/ or /de/. Covers SynapsMedia and Railway hosting."
+---
+
+Supporting multiple languages in TanaFlows requires running **two separate Ghost instances** on the same domain, with each language served from its own subdirectory path. For example, your primary English site lives at `https://domain.com` while a Vietnamese or German edition lives at `https://domain.com/vi/` or `https://domain.com/de/`. A traffic router (reverse proxy) sits in front of both instances and directs each incoming request to the correct Ghost backend.
+
+## Architecture Overview
+
+The core setup always looks like this:
+
+- **Primary Ghost instance** — handles your root domain (`https://domain.com`)
+- **Secondary Ghost instance** — handles a subdirectory path (`https://domain.com/vi/`)
+- **Reverse proxy (Nginx)** — routes requests between the two instances based on the URL prefix
+
+Both Ghost sites maintain completely separate admin panels, databases, and content — only the domain is shared.
+
+---
+
+## Option 1: SynapsMedia Managed Hosting
+
+<Note>
+SynapsMedia is the recommended choice if you want subdirectory multi-language routing without touching the command line, Nginx configs, or YAML files. They handle all server setup, maintenance, and security for you.
+</Note>
+
+[SynapsMedia](https://www.synapsmedia.com/) is a professional managed Ghost hosting provider with native support for subdirectory routing. It is the simplest path to a production-ready multilingual Ghost site.
+
+**Why choose SynapsMedia?**
+
+- **Fully Managed** — server setup, maintenance, security, and updates are all handled for you.
+- **Subdirectory Support** — run your primary site at `https://domain.com` and secondary language sites at paths like `https://domain.com/vi/` or `https://domain.com/de/`.
+- **No Code Required** — no Nginx configuration, no YAML files, no SSH access needed.
+- **Expert Support** — technical support team specialised in Ghost CMS.
+
+### Shared-Domain Benefits
+
+Running multiple Ghost sites under one domain on SynapsMedia unlocks several perks:
+
+- **Shared Newsletter Quota** — sites under the same domain share their email limits. Three sites each with 2,000 monthly credits share a combined pool of 6,000; credits are deducted from the sending site first, then the root site, then other connected sites.
+- **Shared Custom Sending Domain** — subdirectory installs automatically inherit the custom sending domain from the root site.
+- **Multi-site Discount** — subdirectory installs receive a 10% discount.
+- **Unlimited Subdirectories** — create as many language paths as you need (e.g. `/vi`, `/de`, `/fr`, `/docs`).
+
+### Configure Subdirectory Installs on SynapsMedia
+
+<Steps>
+  <Step title="Create Publications">
+    Ensure you have at least two Ghost publications running under your SynapsMedia account — one will be the primary site and the other the secondary language site.
+  </Step>
+  <Step title="Access Settings">
+    In the SynapsMedia Panel, open the settings page of the Ghost site you want to run under a subdirectory (the secondary language site).
+  </Step>
+  <Step title="Enable Subdirectory Install">
+    Scroll down to the **Domains** section and click **Enable subdirectory install**.
+  </Step>
+  <Step title="Configure Routing">
+    In the **Domain** dropdown, select the main domain of your active primary Ghost site. In the **Subdirectory path** field, enter the desired path — for example `vi` or `de`.
+  </Step>
+  <Step title="Save and Restart">
+    Click **Enable Subdirectory Install**. SynapsMedia will automatically reconfigure and restart both publications within about a minute.
+  </Step>
+</Steps>
+
+<Info>
+**Rules and Restrictions to Keep in Mind**
+
+- **Separate Ghost Admins** — each site's admin panel stays independent. You can reach the subdirectory admin at `https://domain.com/{subdir}/ghost/`.
+- **Email Deliverability** — all publications under the same domain send membership and newsletter emails using the root site's sending domain configuration.
+- **Sitemaps & Robots.txt** — sitemaps are separate; submit the subdirectory sitemap to Google Search Console manually. `robots.txt` rules do not merge automatically and must be manually combined on the root publication.
+- **Social Web (ActivityPub)** — federation is disabled on subdirectory installations.
+</Info>
+
+---
+
+## Option 2: Self-Host on Railway
+
+Railway is the easiest self-hosted path thanks to an official **1-Click Setup** that provisions the traffic router, two Ghost sites, and a database all at once.
+
+**What you need:**
+- A [Railway account](https://railway.app)
+- A custom domain (e.g. `your-domain.com`)
+
+<Steps>
+  <Step title="Launch the 1-Click Setup">
+    Click the Deploy on Railway button to start. Railway will automatically provision:
+
+    - **Traffic Router** (Nginx Proxy)
+    - **Primary Blog** (e.g. English)
+    - **Secondary Blog** (e.g. Vietnamese)
+    - **Database** (MySQL)
+  </Step>
+  <Step title="Copy the Private Links">
+    After deployment, go to the **Settings** tab of each Blog service on Railway. Scroll to the **Networking** section and copy the private link ending in `.railway.internal` — for example:
+
+    ```text
+    http://ghost.railway.internal:2368
+    http://ghost-vi.railway.internal:2368
+    ```
+  </Step>
+  <Step title="Configure the Traffic Router">
+    Select the **Nginx Proxy** service, open its **Variables** tab, and set the following:
+
+    | Variable | Value |
+    |---|---|
+    | `SERVER_NAME` | Your domain, e.g. `your-domain.com` |
+    | `GHOST_ROOT_URL` | Private link of your Primary Blog |
+    | `GHOST_INSTANCES` | Path + private link of your Secondary Blog, e.g. `/vi:http://ghost-vi.railway.internal:2368` |
+  </Step>
+  <Step title="Set the Public Addresses">
+    Update the `url` variable on each Ghost service:
+
+    - **Primary Blog** → `https://your-domain.com`
+    - **Secondary Blog** → `https://your-domain.com/vi/`
+  </Step>
+  <Step title="Link Your Domain">
+    Open the **Nginx Proxy** service settings. Under **Networking**, click **+ Add Domain**, enter your domain, and connect it to the proxy on port `8080`. Then point your DNS records to Railway at your domain registrar.
+
+    Once active:
+    - `https://your-domain.com` loads the **primary blog**
+    - `https://your-domain.com/vi/` loads the **secondary language blog**
+  </Step>
+</Steps>
+
+---
+
+## Choosing the Right Option
+
+<CardGroup cols={2}>
+  <Card title="SynapsMedia" icon="server">
+    Best for publishers who want zero server management. Everything is configured through a GUI — no SSH, no config files. Includes a multi-site discount and shared newsletter quota across language editions.
+  </Card>
+  <Card title="Railway" icon="train-track">
+    Best for developers who prefer self-managed infrastructure. The 1-Click Setup handles the entire stack automatically, and Railway's variable-based config keeps ongoing maintenance simple.
+  </Card>
+</CardGroup>

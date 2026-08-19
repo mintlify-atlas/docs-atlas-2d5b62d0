@@ -1,0 +1,57 @@
+---
+title: "Image Lightbox: Click-to-Expand Images in Ghost Posts"
+sidebarTitle: "Lightbox"
+description: "A built-in Vanilla JS lightbox zooms images to full-screen with cinematic animation, high-res swapping, GPU acceleration, and intuitive multi-method dismissal controls."
+---
+
+TanaFlows includes a premium built-in **Lightbox** feature that activates automatically on every image in your posts and pages. When a reader clicks an image, it gracefully expands to fill the screen over a dark dimmed backdrop, letting them examine fine details without distraction — no plugins, no extra configuration required.
+
+---
+
+## How the Lightbox Works
+
+### Cinematic Zooming
+
+The image transitions from its exact position in the article to the center of the screen using the native **Web Animations API** — not a rigid popup window or a new browser tab.
+
+- **Smooth Animation:** The zoom completes in 300 milliseconds using a natural `cubic-bezier(0.4, 0, 0.2, 1)` easing curve for a buttery, premium feel.
+- **Safe Margins:** The expanded image is sized dynamically to the browser viewport with a **10% safe buffer** around all edges, ensuring the image never touches screen borders.
+
+### High-Resolution Swapping
+
+Ghost serves compressed images by default to keep page loads fast. The Lightbox improves on this with a two-phase approach:
+
+<Steps>
+  <Step title="Instant compressed preview">
+    The compressed image expands immediately on click so the reader sees the zoomed view without any waiting.
+  </Step>
+  <Step title="Background high-res fetch">
+    Concurrently, the system fetches the **original high-resolution version** of the image in the background.
+  </Step>
+  <Step title="Seamless swap">
+    Once the high-res version is ready, it silently replaces the compressed image — with no visual jump, flicker, or interruption to the reader's view.
+  </Step>
+</Steps>
+
+### Intuitive Controls and Cursor Feedback
+
+The Lightbox provides clear visual cues and multiple natural exit paths:
+
+- **Zoom-In Cursor:** Hovering over any zoomable image changes the mouse pointer to a **plus magnifying glass** (`zoom-in`).
+- **Zoom-Out Cursor:** Once an image is fully expanded, the cursor switches to a **minus magnifying glass** (`zoom-out`) to signal the click-to-close action.
+- **Click to Dismiss:** Clicking anywhere on the expanded image or on the dimmed background closes the lightbox.
+- **Escape Key:** Pressing `Escape` on the keyboard dismisses the expanded view.
+- **Scroll to Dismiss:** Scrolling up or down more than 50 pixels automatically shrinks the image back to its original position in the article.
+- **Resize to Dismiss:** If the browser window is resized while an image is expanded, the lightbox closes automatically to prevent layout breakage.
+
+---
+
+## Performance and Device Considerations
+
+The Lightbox is built in pure **Vanilla JS** with no external library dependencies, keeping the additional page weight negligible.
+
+- **GPU Acceleration:** The `willChange` CSS property is applied during animation to delegate transitions to the graphics card, eliminating stutter even on lower-powered devices.
+
+<Info>
+  The Lightbox is **automatically disabled on small mobile screens**. This is intentional — mobile operating systems provide native, optimized pinch-to-zoom gestures that offer a better experience than a JavaScript overlay on a touchscreen. Desktop and tablet users with a pointer device get the full Lightbox experience.
+</Info>

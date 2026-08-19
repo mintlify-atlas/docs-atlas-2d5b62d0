@@ -1,0 +1,96 @@
+---
+title: "Build a Course Hub Page to Showcase All Your Courses"
+sidebarTitle: "Course Hub"
+description: "Create a dedicated course hub page in Ghost with TanaFlows that lists all your courses with thumbnails, descriptions, and enrollment links."
+---
+
+A dedicated course hub page gives your audience a single, well-organised destination to browse every course you offer. Rather than scattering courses across your blog feed or navigation menus, a hub page presents them with consistent thumbnails, descriptions, and enrollment links — making it easy for visitors to compare and choose. A professional-looking hub also builds trust: it signals that you are serious about teaching, which directly improves signup conversion rates.
+
+<Note>
+  Check out the [live demo course hub](https://tanaflows.bepublish.com/courses/) to see the finished layout before you begin.
+</Note>
+
+## Before You Start
+
+Each entry on the course hub represents a **course page** — a dedicated Ghost page built with TanaFlows' `custom-course` template. Make sure you have at least one course page ready before creating the hub. See the [course page setup guide](/templates/course-page) for instructions on creating individual course pages.
+
+<Steps>
+
+  ### Create Your Individual Course Pages
+
+  The course hub is a collection of links to individual course pages. Before the hub can list anything, each course needs its own Ghost page.
+
+  For every course you want to feature:
+
+  1. Go to **Ghost Admin → Pages → New Page**.
+  2. Open the page settings sidebar (gear icon) and set the **Template** to **`custom-course`**.
+  3. Fill in the page's **title**, **excerpt** (used as the course description on the hub), and **feature image** (used as the course thumbnail).
+  4. Publish the page.
+
+  Repeat this for each course. Each published `custom-course` page will automatically be picked up and displayed on the hub.
+
+  <Tip>
+    Write a compelling excerpt for each course page — it will appear as the course description on the hub listing, and it is the primary text that convinces visitors to click through and enrol.
+  </Tip>
+
+  ### Create the Course Hub Page
+
+  With your individual course pages published, create the hub page that aggregates them all.
+
+  1. Go to **Ghost Admin → Pages → New Page**.
+  2. Set the page **URL (slug)** to `courses` — this gives you the clean URL `yourdomain.com/courses/`.
+  3. Fill in the SEO metadata for the hub:
+     - **Excerpt:** A short description of your course catalogue (used as the page meta description)
+     - **Feature image:** An Open Graph image for social sharing
+     - **Feature image ALT:** Descriptive alt text for accessibility and SEO
+  4. Leave the **page content body blank** — TanaFlows automatically populates the hub layout from your published `custom-course` pages.
+  5. Publish the page.
+
+  <Info>
+    The hub page does not require any body content. TanaFlows queries Ghost for all pages using the `custom-course` template and renders them in the hub grid automatically.
+  </Info>
+
+  ### Configure the Hub Route (Optional)
+
+  By default, publishing a page with the slug `courses` is sufficient for most sites. If you want the course hub to behave as a paginated collection, or if you need a different URL, you can define it explicitly in `routes.yaml`.
+
+  Download `routes.yaml` from **Ghost Admin → Settings → Labs → Routes**, add the following block, then re-upload:
+
+  ```yaml title="routes.yaml — optional course hub collection"
+  routes:
+    /courses/:
+      controller: channel
+      template: courses
+      data: page.courses
+  ```
+
+  <Note>
+    This step is only necessary if you want paginated listings, a non-default URL, or to bind specific page metadata to a collection-style route. Most creators can skip it and use the static page approach from Step 2.
+  </Note>
+
+  ### Verify the Hub Layout
+
+  Once the page is published, visit `yourdomain.com/courses/` and confirm that:
+
+  - Each course appears as a card with its feature image, title, and excerpt
+  - Clicking a course card navigates to the correct individual course page
+  - The page title, meta description, and Open Graph image match what you entered in the hub page settings
+
+  <Tip>
+    Use [Google's Rich Results Test](https://search.google.com/test/rich-results) to confirm that structured data is being generated correctly for the hub page and each course page.
+  </Tip>
+
+</Steps>
+
+## Keeping the Hub Up to Date
+
+The course hub is dynamic — it reflects your published `custom-course` pages automatically. To add a new course to the hub, simply publish a new page with the `custom-course` template. To remove a course from the hub without deleting it, unpublish the individual course page or change its template.
+
+<CardGroup cols={2}>
+  <Card title="Course Page Setup" icon="book-open" href="/templates/course-page">
+    Learn how to build individual course pages with chapters, lessons, and access control.
+  </Card>
+  <Card title="Full-Format Course" icon="graduation-cap" href="/tutorials/create-curated-page">
+    Set up the SPA course viewer with a left-sidebar lesson navigator and video player.
+  </Card>
+</CardGroup>

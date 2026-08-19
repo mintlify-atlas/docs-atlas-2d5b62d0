@@ -1,0 +1,48 @@
+---
+title: "Setting Up Cusdis Comments in TanaFlows Ghost Theme"
+sidebarTitle: "Cusdis"
+description: "Add privacy-first, open-source Cusdis comments to your TanaFlows Ghost theme using your site's data-app-id from the Cusdis dashboard."
+---
+
+[Cusdis](https://cusdis.com/) is a lightweight, open-source comment system built with privacy in mind. Unlike traditional comment platforms, Cusdis does not track your readers or serve ads. It offers a generous free hosted tier as well as a self-hosted option for complete data ownership, making it an excellent choice for privacy-conscious publishers who want reader engagement without the surveillance.
+
+<Steps>
+  <Step title="Create a Cusdis account and add your site">
+    [Sign up for a Cusdis account](https://cusdis.com/api/auth/signin) and log in to the dashboard.
+
+    Once inside, click **New Site** and fill in your site's name and URL to register it with Cusdis.
+  </Step>
+
+  <Step title="Retrieve your data-app-id">
+    After creating the site, click the **Embedded code** button on your site's dashboard entry. This opens a panel showing the embed snippet.
+
+    Locate the `data-app-id` attribute in the snippet — copy its value. It will look similar to this:
+
+    ```html
+    <div
+      id="cusdis_thread"
+      data-host="https://cusdis.com"
+      data-app-id="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+      ...
+    ></div>
+    ```
+
+    You only need the value of `data-app-id` for the next step.
+  </Step>
+
+  <Step title="Select Cusdis as the comment provider in Ghost">
+    In your Ghost Admin dashboard, go to **Settings** → **Design** → **Customizer** → **Post** → **Comment provider** and choose **Cusdis**.
+  </Step>
+
+  <Step title="Paste your data-app-id into the Comment ID field">
+    In the **3rd comment id** field, paste the `data-app-id` value you copied from the Cusdis dashboard.
+  </Step>
+
+  <Step title="Save and verify">
+    Click **Save** in the Customizer, then open any post on your site. The Cusdis comment widget will appear at the bottom of each post.
+  </Step>
+</Steps>
+
+<Note>
+  Cusdis requires comment approval by default — new comments will not appear publicly until you approve them in the Cusdis dashboard. You can disable this moderation requirement in your Cusdis site settings if you prefer comments to appear immediately.
+</Note>
