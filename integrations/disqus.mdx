@@ -4,45 +4,24 @@ sidebarTitle: "Disqus"
 description: "Add Disqus to your TanaFlows Ghost site for a widely recognized comment platform with built-in moderation, reactions, and spam filtering."
 ---
 
-[Disqus](https://disqus.com/) is one of the most widely used third-party commenting platforms on the web. It gives site owners a full-featured comment section with moderation tools, spam filtering, and a familiar interface that many readers already have an account with. Disqus is a practical choice if you want to get a comment system running with minimal configuration and prefer a hosted solution that requires no server management.
-
-## Prerequisites
-
-- A [Disqus account](https://disqus.com/profile/signup/)
-- A Disqus **site** created for your Ghost publication (this generates your shortname)
+[Disqus](https://disqus.com/) is a popular and widely used commenting platform that allows website owners to integrate a comment system easily. It provides a friendly interface for both site owners and users, making it simple to manage and moderate comments. Here's how to integrate Disqus into the TanaFlows theme.
 
 <Steps>
-  <Step title="Create a Disqus account and register your site">
-    [Sign up for a Disqus account](https://disqus.com/profile/signup/) if you do not have one already. After logging in, click **Get Started** and choose **I want to install Disqus on my site**.
+  <Step title="Create a Disqus account and get the shortname">
+    [Sign up for a Disqus account](https://disqus.com/profile/signup/). After logging in, create a new site.
 
-    Fill in your **Website Name**. Disqus will automatically generate a subdomain from this name — this subdomain is your **shortname**.
+    In the website name field, give your site a name and Disqus will create a subdomain for you.
 
     <Note>
-      Subdomain = Website Name = Shortname. For example, if you name your site `ghostfam`, your shortname is `ghostfam` and your Disqus URL will be `ghostfam.disqus.com`.
+      Subdomain = Website Name = Shortname. For example, if you name your site `ghostfam`, your shortname is `ghostfam`.
     </Note>
-
-    Complete the setup flow and note your shortname — you will need it in the next step.
   </Step>
 
-  <Step title="Select Disqus as the comment provider in Ghost">
-    In your Ghost Admin dashboard, go to **Settings** → **Design** → **Customizer** → **Post** → **Comment provider** and choose **Disqus**.
-  </Step>
+  <Step title="Paste the shortname into Ghost Admin">
+    Go to **Settings** → **Design** → **Post**, paste your `shortname` in the **3rd comment id** field, and select **Disqus** as the comment provider. The demo below has the shortname `ghostfam`.
 
-  <Step title="Paste your shortname into the Comment ID field">
-    In the **3rd comment id** field, enter your Disqus shortname.
-
-    For example, if your shortname is `ghostfam`, enter:
-
-    ```
+    ```text
     ghostfam
     ```
   </Step>
-
-  <Step title="Save and verify">
-    Click **Save** in the Customizer, then open any post on your site. The Disqus comment thread should appear at the bottom of each post.
-  </Step>
 </Steps>
-
-<Tip>
-  If you change your Disqus site name after setup, remember to update the shortname in the Ghost Customizer as well — otherwise comments will fail to load.
-</Tip>

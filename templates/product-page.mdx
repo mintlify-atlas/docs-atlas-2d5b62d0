@@ -162,18 +162,36 @@ The video loads progressively — the static image appears immediately, then fad
 
 ---
 
-## Automatic Product Schema (JSON-LD)
+## Auto Product Schema
 
-The Product template automatically generates and injects **JSON-LD structured data** following the [schema.org/Product](https://schema.org/Product) standard. No extra tags or manual setup are needed.
+**JSON-LD Product Schema** is structured data following the [schema.org/Product](https://schema.org/Product) standard embedded into the page. This helps Google read and understand your product information to display **Rich Results** on search engine results pages (SERPs):
 
-This schema enables Google Rich Results including:
+- 🏷️ **Product Price** displayed directly below the page title in search results.
+- 🛒 **Stock Status** (`In Stock`).
+- ⭐ **Review Ratings** (if available).
+- 🔍 **Merchant listings** in Google Shopping.
 
-- Price displayed directly beneath the page title in search results
-- Stock status (`In Stock`)
-- Star review ratings (when a testimonial is present)
-- Merchant listings in Google Shopping
+<Warning>
+  Google only displays Rich Results when the schema is **fully valid**. Incorrect properties (such as using `author` instead of `manufacturer`) or missing identifiers (like `sku`) will cause Google to ignore the entire schema.
+</Warning>
 
-### Example JSON-LD output
+Output JSON-LD:
+
+```json
+"brand": {
+  "@type": "Brand",
+  "name": "TanaFlows",
+  "logo": "https://yoursite.com/logo.png",
+  "url": "https://tanaflows.com",
+  "description": "A modern learning platform"
+}
+```
+
+---
+
+### Full Output JSON-LD Example
+
+Example with `price: '3.500.000 VND'` along with both `author` and `brand`:
 
 ```json
 {
@@ -192,17 +210,17 @@ This schema enables Google Rich Results including:
   },
   "offers": {
     "@type": "Offer",
-    "price": "99",
-    "priceCurrency": "USD",
+    "price": "3500000",
+    "priceCurrency": "VND",
     "url": "https://yoursite.com/en/product/tana-digital-brain/",
     "availability": "https://schema.org/InStock",
     "itemCondition": "https://schema.org/NewCondition"
   },
   "manufacturer": {
     "@type": "Person",
-    "name": "John Doe",
+    "name": "Cuong Thach",
     "image": "https://yoursite.com/avatar.jpg",
-    "url": "https://yoursite.com/author/john"
+    "url": "https://yoursite.com/author/cuong"
   }
 }
 ```
@@ -217,10 +235,12 @@ This schema enables Google Rich Results including:
 | Missing `feature_image` | The `image` field is omitted |
 | `price: '100% Free'` | Matched as a free-price keyword; the number `100` is ignored |
 
-### Validate your schema
+### Testing Your Schema
 
-| Tool | Purpose |
-|---|---|
-| [Google Rich Results Test](https://search.google.com/test/rich-results) | Confirms eligibility for search Rich Results |
-| [Schema Markup Validator](https://validator.schema.org) | Validates syntax against schema.org spec |
-| Google Search Console → Enhancements → Products | Tracks indexing status after deployment |
+After deploying, verify the implementation using these tools:
+
+| Tool | URL | Purpose |
+|---|---|---|
+| **Google Rich Results Test** | [search.google.com/test/rich-results](https://search.google.com/test/rich-results) | Confirms if your schema is eligible for search Rich Results |
+| **Schema Markup Validator** | [validator.schema.org](https://validator.schema.org) | Validates syntax compliance with schema.org |
+| **Google Search Console** | Enhancements → Products | Tracks index status and health after deployment |

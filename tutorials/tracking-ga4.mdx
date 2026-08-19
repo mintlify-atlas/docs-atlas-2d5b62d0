@@ -112,36 +112,4 @@ The following steps show how to track any button from the reference table above.
   7. Under **Triggering**, select the `Click - Product Buy Button` trigger from Step 2.
   8. Click **Save**, then click **Submit** to publish your changes.
 
-  ### Verify Tracking Is Working
-
-  1. In GTM, click **Preview** to enter debug mode — GTM will open your site in a new tab with the debug panel active.
-  2. Navigate to a product page and click the **Buy Now** button.
-  3. In the GTM debug panel, confirm that the trigger `Click - Product Buy Button` fires and the tag `GA4 Event - Product Buy Click` is listed as **Fired**.
-  4. Open **GA4 → Reports → Realtime** and confirm that the `product_buy_click` event appears within a few seconds.
-
-  <Note>
-    GA4 Realtime reports have a short delay (usually 5–30 seconds). If the event does not appear after 60 seconds, check that your GA4 Measurement ID in the tag configuration matches the ID in your GA4 property settings (**GA4 Admin → Data Streams → Web stream → Measurement ID**).
-  </Note>
-
 </Steps>
-
----
-
-## Applying This to Other Elements
-
-The same three-step pattern (enable variables → create trigger → create tag) works for every selector in the reference table. Some practical tracking priorities for TanaFlows sites:
-
-<CardGroup cols={2}>
-  <Card title="Affiliate & Monetization" icon="dollar-sign">
-    Track `product_buy_click` and `biolink_link_click` to measure conversion rates on your affiliate and product pages. Add a `click_url` parameter to identify which link drove each click.
-  </Card>
-  <Card title="Course Engagement" icon="graduation-cap">
-    Track `course_unlock_click`, `course_lesson_select`, and `course_next_lesson` to understand where students drop off and which lessons hold attention best.
-  </Card>
-  <Card title="Search Behaviour" icon="magnifying-glass">
-    Track `search_open` alongside GA4's built-in search term reporting to understand what topics your readers are looking for — useful for content planning.
-  </Card>
-  <Card title="Newsletter Growth" icon="envelope">
-    Track `newsletter_signup` form submissions and funnel them into a GA4 conversion to measure the impact of different CTA placements and post types on subscription rates.
-  </Card>
-</CardGroup>

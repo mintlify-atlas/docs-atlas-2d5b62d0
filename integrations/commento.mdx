@@ -4,37 +4,23 @@ sidebarTitle: "Commento"
 description: "Integrate Commento's fast, privacy-focused comment system into TanaFlows — supports both the hosted service and a self-hosted Commento instance."
 ---
 
-[Commento](https://commento.io/) is a fast, privacy-focused comment system that integrates cleanly with Ghost CMS. It does not show ads, does not sell user data, and loads quickly — making it a popular alternative to Disqus for publishers who care about reader experience and site performance. Commento is available as a paid hosted service and as a free self-hosted solution, giving you full flexibility over where your comment data lives.
+[Commento](https://commento.io/) is a web-based commenting system that focuses on speed and privacy. It offers a clean interface, is compatible with Ghost CMS, and is available as a paid hosted service (starting at $10/month) or as a free self-hosted solution.
 
 <Note>
-  Commento offers a self-hosted version that you can run on your own server at no cost. The hosted service starts at $10/month. Both options are fully supported by TanaFlows.
+  Commento offers a self-hosted version, allowing you to host the commenting system on your own server. This can be a cost-effective solution, as it eliminates the need for third-party hosting services.
 </Note>
 
 <Steps>
-  <Step title="Create a Commento account and add your domain">
-    If you are using the hosted Commento service, sign up at [commento.io](https://commento.io/) and log in to your dashboard.
-
-    In the dashboard, click **Add a new domain** and enter your Ghost site's URL. Commento uses your domain to scope comments to the correct site.
-
-    If you are self-hosting Commento, follow the [Commento self-hosting guide](https://docs.commento.io/installation/) to deploy your own instance and note the domain where it is running.
+  <Step title="Add your domain in the Commento dashboard">
+    At the Commento dashboard, add your domain.
   </Step>
 
   <Step title="Select Commento as the comment provider in Ghost">
-    In your Ghost Admin dashboard, go to **Settings** → **Design & branding** → **Customize** → **Post** → **Comment provider** and choose **Commento**.
-  </Step>
+    Go to **Settings** → **Design & branding** → **Customize** → **Post** and choose **Commento** as the comment provider.
 
-  <Step title="Configure the Comment ID field">
-    The **3rd comment id** field behaves differently depending on which Commento option you are using:
-
-    - **Hosted Commento service** — leave the field **empty**. Commento will load automatically using your registered domain.
-    - **Self-hosted Commento** — paste your **custom Commento domain** (e.g., `https://comments.yourdomain.com`) into the field.
-  </Step>
-
-  <Step title="Save and verify">
-    Click **Save** in the Customizer, then open any post on your site. The Commento widget will appear at the bottom of each post, and Commento will automatically load and display the comment count on post cards and single post pages.
+    - If you use the hosted Commento service, leave the **3rd comment id** field **empty**.
+    - If you are using a self-hosted Commento instance, paste your **custom Commento domain** in the **3rd comment id** field.
   </Step>
 </Steps>
 
-<Tip>
-  Commento automatically displays comment counts on your post listing pages as well as within individual posts — no additional configuration is required for count display to work.
-</Tip>
+Commento will automatically load the comment count on post cards and single post pages.

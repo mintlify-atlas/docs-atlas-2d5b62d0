@@ -1,5 +1,5 @@
 ---
-title: "Write and Link Multilingual Articles in Ghost"
+title: "Write and Link Multilingual Articles in TanaFlows Ghost"
 sidebarTitle: "Multilingual Articles"
 description: "Use the #multilingual internal tag and matching slugs to link translated posts in TanaFlows. Includes localization of static UI labels."
 ---
@@ -37,24 +37,21 @@ TanaFlows links translated articles automatically — no shortcodes, no plugin s
     </Warning>
   </Step>
   <Step title="Verify the Link">
-    Once both posts are published with the same slug and `#multilingual` tag, TanaFlows will automatically:
-
-    - Link the language switcher between the two posts.
-    - Insert `hreflang` alternate tags in each post's `<head>` for Google.
+    Once both posts are published with the same slug and `#multilingual` tag, TanaFlows will automatically link the language switcher between the two posts and insert `hreflang` alternate tags in each post's `<head>` for Google.
 
     A reader on the Vietnamese post who selects "English" in the switcher will be redirected directly to the English version, and vice versa.
   </Step>
 </Steps>
 
 <Info>
-  You can verify that your `hreflang` implementation is correct with the [Hreflang Tag Checker](https://technicalseo.com/tools/hreflang/) tool. Run both post URLs through it to confirm there are no SEO errors before publishing.
+  You can verify your `hreflang` implementation with the [Hreflang Tag Checker](https://technicalseo.com/tools/hreflang/) tool. Run both post URLs through it to confirm there are no SEO errors.
 </Info>
 
 ---
 
 ## A Note on Slug Choice
 
-The slug does not affect SEO ranking. If you have an English version of an article, using an English-language slug makes it easier to read in Google search results and easier for users to remember. You can use the English slug on both Ghost instances — it will work correctly regardless of which language the post is written in.
+The slug does not affect SEO ranking. If you have an English version of an article, using an English-language slug makes it easier to remember and best suited for displaying on Google SERP. You can use the English slug on both Ghost instances — it will work correctly regardless of which language the post is written in.
 
 ---
 
@@ -62,29 +59,21 @@ The slug does not affect SEO ranking. If you have an English version of an artic
 
 TanaFlows ships with a `locales/` directory inside the theme folder. This directory contains one JSON file per language (e.g. `en.json`, `vi.json`) that controls the static text labels shown throughout the site interface — such as the "Not translated" message displayed when a post has no counterpart translation.
 
-### How to Customise Labels
-
 <Steps>
   <Step title="Open the Locales Directory">
-    Navigate to the `locales/` folder inside your TanaFlows theme directory. You will find one `.json` file for each language your theme supports.
+    Navigate to the `locales/` folder inside your TanaFlows theme directory.
   </Step>
   <Step title="Edit the Language File">
     Open the file that corresponds to the language you want to customise. For example, open `vi.json` to edit Vietnamese labels or `en.json` for English labels.
   </Step>
   <Step title="Update the Key Values">
-    Find the key you want to change and replace its value with your preferred text. Save the file when done.
+    Find the key you want to change and replace its value with your preferred text. Example in `vi.json`:
+
+    ```json
+    {
+      "Not translated": "Chưa có bản dịch",
+      "Back to Home": "Quay lại trang chủ"
+    }
+    ```
   </Step>
 </Steps>
-
-**Example — customising Vietnamese labels in `vi.json`:**
-
-```json
-{
-  "Not translated": "Chưa có bản dịch",
-  "Back to Home": "Quay lại trang chủ"
-}
-```
-
-<Info>
-  After editing a locale file, you will need to re-upload or re-deploy the theme for the changes to take effect in Ghost. The keys (left side of each pair) must remain unchanged — only the values (right side) should be edited.
-</Info>

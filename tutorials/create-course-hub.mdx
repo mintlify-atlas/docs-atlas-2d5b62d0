@@ -50,47 +50,8 @@ Each entry on the course hub represents a **course page** — a dedicated Ghost 
     The hub page does not require any body content. TanaFlows queries Ghost for all pages using the `custom-course` template and renders them in the hub grid automatically.
   </Info>
 
-  ### Configure the Hub Route (Optional)
-
-  By default, publishing a page with the slug `courses` is sufficient for most sites. If you want the course hub to behave as a paginated collection, or if you need a different URL, you can define it explicitly in `routes.yaml`.
-
-  Download `routes.yaml` from **Ghost Admin → Settings → Labs → Routes**, add the following block, then re-upload:
-
-  ```yaml title="routes.yaml — optional course hub collection"
-  routes:
-    /courses/:
-      controller: channel
-      template: courses
-      data: page.courses
-  ```
-
-  <Note>
-    This step is only necessary if you want paginated listings, a non-default URL, or to bind specific page metadata to a collection-style route. Most creators can skip it and use the static page approach from Step 2.
-  </Note>
-
-  ### Verify the Hub Layout
-
-  Once the page is published, visit `yourdomain.com/courses/` and confirm that:
-
-  - Each course appears as a card with its feature image, title, and excerpt
-  - Clicking a course card navigates to the correct individual course page
-  - The page title, meta description, and Open Graph image match what you entered in the hub page settings
-
-  <Tip>
-    Use [Google's Rich Results Test](https://search.google.com/test/rich-results) to confirm that structured data is being generated correctly for the hub page and each course page.
-  </Tip>
-
 </Steps>
 
-## Keeping the Hub Up to Date
-
-The course hub is dynamic — it reflects your published `custom-course` pages automatically. To add a new course to the hub, simply publish a new page with the `custom-course` template. To remove a course from the hub without deleting it, unpublish the individual course page or change its template.
-
-<CardGroup cols={2}>
-  <Card title="Course Page Setup" icon="book-open" href="/templates/course-page">
-    Learn how to build individual course pages with chapters, lessons, and access control.
-  </Card>
-  <Card title="Full-Format Course" icon="graduation-cap" href="/tutorials/create-curated-page">
-    Set up the SPA course viewer with a left-sidebar lesson navigator and video player.
-  </Card>
-</CardGroup>
+<Card title="Course Page Setup" icon="book-open" href="/templates/course-page">
+  Learn how to build individual course pages with chapters, lessons, and access control.
+</Card>

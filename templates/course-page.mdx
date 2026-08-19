@@ -1,5 +1,5 @@
 ---
-title: "Course Page Template: Host Video Courses on Ghost"
+title: "Course Page Template: Host Video Courses on Ghost CMS"
 sidebarTitle: "Course Page"
 description: "Build a full video course page in Ghost using TanaFlows. Supports YouTube, Vimeo, BunnyCDN, HTML5, Alugha, Mux, and Loom as video sources."
 ---
@@ -50,7 +50,7 @@ The course player reads its lesson list from a global JavaScript variable called
   <Tab title="YouTube">
     For YouTube, `videoUrl` is the **11-character Video ID** found in the URL.
 
-    ```javascript
+    ```html
     <script>
         window.lessons = [
             {
@@ -95,7 +95,7 @@ The course player reads its lesson list from a global JavaScript variable called
   <Tab title="Vimeo">
     For Vimeo, `videoUrl` is the numeric video ID, followed by the `?h=` privacy hash if the video is unlisted or private.
 
-    ```javascript
+    ```html
     <script>
         window.lessons = [
             {
@@ -134,7 +134,7 @@ The course player reads its lesson list from a global JavaScript variable called
   <Tab title="BunnyCDN">
     For Bunny Stream, `videoUrl` follows the format `<Video Library ID>/<Video ID>`.
 
-    ```javascript
+    ```html
     <script>
         window.lessons = [
             {
@@ -175,7 +175,7 @@ The course player reads its lesson list from a global JavaScript variable called
   <Tab title="HTML5">
     For self-hosted or cloud-stored MP4 files, `videoUrl` is the full direct URL to the video file.
 
-    ```javascript
+    ```html
     <script>
         window.lessons = [
             {
@@ -214,7 +214,7 @@ The course player reads its lesson list from a global JavaScript variable called
   <Tab title="Alugha">
     For Alugha, `videoUrl` is the UUID-style video identifier shown in the video's share URL.
 
-    ```javascript
+    ```html
     <script>
         window.lessons = [
             {
@@ -253,7 +253,7 @@ The course player reads its lesson list from a global JavaScript variable called
   <Tab title="Mux">
     For Mux, `videoUrl` is the video's **Playback ID** — not the Asset ID.
 
-    ```javascript
+    ```html
     <script>
         window.lessons = [
             {
@@ -292,7 +292,7 @@ The course player reads its lesson list from a global JavaScript variable called
   <Tab title="Loom">
     For Loom, `videoUrl` is the share ID found after `/share/` in the Loom share URL, including the `?sid=` parameter.
 
-    ```javascript
+    ```html
     <script>
         window.lessons = [
             {

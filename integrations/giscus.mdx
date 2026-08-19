@@ -4,17 +4,17 @@ sidebarTitle: "Giscus"
 description: "Integrate GitHub Discussions-powered comments into TanaFlows using Giscus — ideal for developer audiences who already have a GitHub account."
 ---
 
-Giscus embeds [GitHub Discussions](https://giscus.app/) directly into your blog posts, turning every article into a discussion thread tied to a public GitHub repository. Because it is backed by GitHub, readers authenticate with their existing GitHub account, keeping spam low while fostering genuine technical conversations. It is a great fit for developer-focused Ghost publications that want a comment layer without ads or third-party tracking.
-
-## Prerequisites
-
-- A [GitHub account](https://github.com/)
-- A **public** GitHub repository with the **Discussions** feature enabled
-- The [Giscus app](https://github.com/apps/giscus) installed and granted access to that repository
+[Giscus](https://giscus.app/) provides a seamless way to integrate GitHub-based comments directly into your website. It uses GitHub Discussions as the backend, so readers authenticate with their existing GitHub account. Here's how you install Giscus into the TanaFlows theme.
 
 <Steps>
   <Step title="Generate your Giscus configuration">
-    Visit [giscus.app](https://giscus.app/) and fill in your repository details. The configurator will generate a `<script>` tag that looks like this:
+    Follow the [Giscus setup guide](https://giscus.app/) to generate your configuration. You will need:
+
+    1. A [GitHub](https://github.com/) account with a newly created public repository.
+    2. The Giscus app granted permission to access your repository.
+    3. The Discussions feature enabled on your repository.
+
+    After completing setup, you will obtain a configuration script that looks like this:
 
     ```html
     <script
@@ -35,7 +35,7 @@ Giscus embeds [GitHub Discussions](https://giscus.app/) directly into your blog 
     ></script>
     ```
 
-    Note down these four attributes — you will need them in the next step:
+    Write down these four important attributes for the next step:
 
     - `data-repo`
     - `data-repo-id`
@@ -43,7 +43,7 @@ Giscus embeds [GitHub Discussions](https://giscus.app/) directly into your blog 
     - `data-category-id`
 
     <Note>
-      The values shown above are placeholders. Your generated config will contain real strings such as `"yourname/yourrepo"` and a Base64-encoded repository ID.
+      The values shown above are placeholders. Your generated config will contain real strings.
     </Note>
   </Step>
 
@@ -54,26 +54,18 @@ Giscus embeds [GitHub Discussions](https://giscus.app/) directly into your blog 
   <Step title="Paste the four data attributes into the Comment ID field">
     In the **3rd comment id** field, paste all four attributes on a **single line**, separated by spaces:
 
-    ```html
+    ```text
     data-repo="[ENTER REPO HERE]" data-repo-id="[ENTER REPO ID HERE]" data-category="[ENTER CATEGORY NAME HERE]" data-category-id="[ENTER CATEGORY ID HERE]"
     ```
 
     A real example looks like this:
 
-    ```html
+    ```text
     data-repo="CuongGhost/giscus" data-repo-id="MDExxxx2MDc1MDA=" data-category="Announcements" data-category-id="DIC_kwDxxx"
     ```
-
-    <Warning>
-      All four attributes must be on a single line with no line breaks. Line breaks will cause the integration to fail silently.
-    </Warning>
   </Step>
 
   <Step title="Save and verify">
-    Click **Save** in the Customizer, then open any post on your site. The Giscus comment widget should appear at the bottom of the post. Readers will be prompted to sign in with GitHub to leave a comment.
+    Click **Save** in the Customizer, then open any post on your site. The Giscus comment widget should appear at the bottom of the post.
   </Step>
 </Steps>
-
-<Tip>
-  Giscus inherits your site's color scheme automatically when you set `data-theme="preferred_color_scheme"` in the generated script. You do not need to configure dark/light mode separately.
-</Tip>

@@ -1,10 +1,10 @@
 ---
 title: "Contact Page Template: Build Forms in Ghost with TanaFlows"
 sidebarTitle: "Contact Page"
-description: "Add a Formspark contact form to your Ghost site with TanaFlows. Covers page setup, form creation, anti-bot spam protection, and managing replies via email."
+description: "Set up a Formspark contact form on your Ghost site using TanaFlows. Covers page creation, form setup, Design settings, and managing replies via email."
 ---
 
-TanaFlows includes a ready-made **Contact** page template that wires a spam-protected contact form into your Ghost site without requiring any custom code. The form is powered by [Formspark](https://formspark.io/) — a lightweight form-backend service with a free tier — and is activated by creating a Ghost page with the slug `contact` and pasting your Formspark action URL into Ghost's Design settings. Visitors receive a clean, on-brand form; you receive email notifications with a **Reply-to** header set to the sender's address so you can respond directly from your inbox.
+TanaFlows includes a ready-made **Contact** page template that adds a contact form to your Ghost site without requiring any custom code. The form is powered by [Formspark](https://formspark.io/) — a lightweight form-backend service with a free tier — and is activated by creating a Ghost page with the slug `contact` and pasting your Formspark action URL into Ghost's Design settings. Visitors receive a clean, on-brand form; you receive email notifications with a **Reply-to** header set to the sender's address so you can respond directly from your inbox.
 
 ---
 
@@ -72,18 +72,6 @@ Formspark provides the form submission endpoint and handles spam filtering, emai
 
 ## Managing Contact Messages
 
-Formspark sends an email notification to your registered address each time the form is submitted. The email's **Reply-to** header is automatically set to the sender's email address, so you can reply directly from your mail client without copying addresses manually.
+When a visitor submits the form, Formspark sends you an email notification. The email's **Reply-to** header is automatically set to the sender's address, so you can reply directly from your mail client without copying addresses manually.
 
-<Note>
-  To configure where notification emails are delivered, open the Formspark dashboard, select your form, and update the **Notification email** under form settings. You can also enable integrations with Slack, Zapier, or webhooks for more advanced workflows.
-</Note>
 
----
-
-## Anti-Bot Protection
-
-Formspark includes built-in **Botpoison** anti-spam protection at no extra cost. This invisible challenge verifies that submissions come from real humans before they reach your inbox — no CAPTCHA images or puzzles are shown to legitimate visitors.
-
-<Tip>
-  If you use Formspark's free plan, keep an eye on your monthly submission quota. Upgrading to a paid plan removes submission limits and unlocks additional integrations such as custom redirect URLs and file uploads.
-</Tip>

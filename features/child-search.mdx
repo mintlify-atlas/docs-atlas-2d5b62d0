@@ -1,7 +1,7 @@
 ---
 title: "Child Search: Tag-Scoped Full-Text Search with FuseJS"
 sidebarTitle: "Child Search"
-description: "Tag-scoped full-text search powered by FuseJS — automatically injected on tag pages, related posts, and grid layouts, indexing title, description, and body text."
+description: "FuseJS-powered search scoped to tag pages, related posts, and grid layouts — indexes title, description, and body text; shows top 5 results."
 ---
 
 Ghost's native search works well for site-wide queries, but it has two notable limitations: it cannot scope results to a specific tag, it does not search page content (only posts), and it does not index post body text. **Child Search** fills all three gaps — providing a focused, full-text search experience that is automatically injected wherever readers are most likely to need it.
@@ -44,11 +44,4 @@ On an individual tag page, Child Search functions as a familiar, native-feeling 
 
 When Child Search appears in the Related Posts section of an individual post, it automatically performs a search scoped to **all posts within the primary tag** of that post. This keeps every suggestion contextually relevant: a reader on a JavaScript tutorial will only see JavaScript-tagged posts in both the recommended list and any search results they trigger.
 
----
 
-## Use Cases
-
-- **Course or resource hubs:** Readers can instantly find a specific lesson or tool without scrolling through a long tag archive.
-- **Multilingual sites:** Scoping search to a tag means language-specific content stays isolated from unrelated results.
-- **Affiliate or product pages:** Grid-layout pages with many product entries become instantly filterable without any custom code.
-- **Long-form tutorial series:** Readers can jump directly to the post that answers their specific question, even if the keyword only appears in the body text.
